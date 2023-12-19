@@ -6,14 +6,14 @@ import * as z from "zod";
 
 import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 import {
   //   Card as card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../../components/ui/card";
 import { Button, Card } from "@radix-ui/themes";
 
 import {
@@ -22,12 +22,12 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command";
+} from "../../components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "../../components/ui/popover";
 
 import {
   Select,
@@ -35,7 +35,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "../../components/ui/select";
 
 import {
   Form,
@@ -44,9 +44,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "../../components/ui/form";
+import { Input } from "../../components/ui/input";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 // import FriendComponent from "./FriendComponent";
 
 const formSchema = z.object({
@@ -57,6 +58,7 @@ const formSchema = z.object({
 });
 
 const CreateGroup = () => {
+  const router = useRouter();
   const [friends, setFriends] = useState([]);
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -68,10 +70,12 @@ const CreateGroup = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values) {
-    const formdata = { ...values, friends };
+    const forlgata = { ...values, friends };
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(formdata);
+    router.push("/");
+
+    console.log(forlgata);
   }
 
   const types = [
@@ -102,7 +106,7 @@ const CreateGroup = () => {
   };
 
   return (
-    <Card className="w-8/12 mx-auto" mt="4">
+    <Card className="w-full lg:w-9/12 mx-auto" my="2">
       <CardHeader>
         <CardTitle>Create A New Group</CardTitle>
         {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
@@ -117,22 +121,20 @@ const CreateGroup = () => {
                 <FormItem>
                   <FormLabel>Group Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="title of the group..." {...field} />
+                    <Input placeholder="Title of the group..." {...field} />
                   </FormControl>
-                  {/* <FormDescription>
-                    This is your public display name.
-                  </FormDescription> */}
+
                   <FormMessage />
                 </FormItem>
               )}
             />
 
             {friends.length ? (
-              <div className="w-8/12">
+              <div className="w-full lg:w-7/12">
                 {friends.map((friend, index) => (
                   <FriendComponent
                     key={index}
-                    name={friend}
+                    name={friend.name}
                     onDelete={handleDeleteFriend}
                   />
                 ))}
@@ -152,20 +154,22 @@ const CreateGroup = () => {
                           variant="outline"
                           role="combobox"
                           className={cn(
-                            "w-[200px] justify-between",
+                            "w-full lg:w-7/12 inline-flex justify-between",
                             !field.value && "text-muted-foreground"
                           )}
                         >
-                          {field.value
-                            ? friendsList.find(
-                                (friend) => friend.value === field.value
-                              )?.label
-                            : "Select friend"}
+                          <p>
+                            {field.value
+                              ? friendsList.find(
+                                  (friend) => friend.value === field.value
+                                )?.label
+                              : "Select friend"}
+                          </p>
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
+                    <PopoverContent className="w-full lg:w-7/12 p-0">
                       <Command>
                         <CommandInput placeholder="Search friend..." />
                         <CommandEmpty>No friend found.</CommandEmpty>
@@ -177,7 +181,10 @@ const CreateGroup = () => {
                               key={friend.value}
                               onSelect={() => {
                                 setFriends((prev) => [
-                                  ...new Set([...prev, friend.value]),
+                                  ...new Set([
+                                    ...prev,
+                                    { id: friend.label, name: friend.value },
+                                  ]),
                                 ]);
                               }}
                             >
@@ -207,25 +214,27 @@ const CreateGroup = () => {
                 <FormItem>
                   <FormLabel>Group Type</FormLabel>
                   <FormControl>
-                    <Select {...field} onValueChange={field.onChange}>
-                      <SelectTrigger id="type1">
-                        <SelectValue placeholder="Type" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        {types.map((type) => {
-                          return (
-                            <SelectItem value={type.value} key={type.value}>
-                              {type.label}
-                            </SelectItem>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
+                    <div className="w-full lg:w-7/12">
+                      <Select {...field} onValueChange={field.onChange}>
+                        <SelectTrigger id="type">
+                          <SelectValue placeholder="Type" />
+                        </SelectTrigger>
+                        <SelectContent position="popper">
+                          {types.map((type) => {
+                            return (
+                              <SelectItem value={type.value} key={type.value}>
+                                {type.label}
+                              </SelectItem>
+                            );
+                          })}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </FormControl>
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Save</Button>
           </form>
         </Form>
       </CardContent>
@@ -235,7 +244,7 @@ const CreateGroup = () => {
 
 const FriendComponent = ({ name, onDelete }) => (
   <div
-    className={`flex justify-between items-center rounded-md p-2 text-sm font-medium text-gray-700 border-b-2 " 
+    className={`flex justify-between items-center rounded-lg p-2 text-sm font-medium text-gray-700 border-b-2 " 
     }`}
   >
     <h1 className="">{name}</h1>

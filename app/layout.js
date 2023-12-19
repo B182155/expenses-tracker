@@ -3,10 +3,11 @@ import "@radix-ui/themes/styles.css";
 // import { Inter } from "next/font/google";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-import { Container, Theme, ThemePanel } from "@radix-ui/themes";
+import { Card, Container, Theme, ThemePanel } from "@radix-ui/themes";
 import Navbar from "./Navbar";
 import AsideBar from "./AsideBar";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
+import AuthProvider from "./auth/Provider";
 
 // const inter = Inter({ subsets: ["latin"] });
 export const fontSans = FontSans({
@@ -31,25 +32,30 @@ export default function RootLayout({ children }) {
       >
         {/*<NextThemeProvider> */}
 
-        <Theme
-          appearance="light"
-          panelBackground="translucent"
-          accentColor="purple"
-        >
-          <Container className="mx-auto w-9/12">
-            <nav className="">
-              <Navbar />
-            </nav>
-            <div className="grid grid-flow-row grid-cols-12 gap-2 ">
-              <aside className="col-span-3 bg-purple-100">
-                <AsideBar />
-              </aside>
-              <main className="col-span-9  bg-green-100">{children}</main>
-            </div>
-          </Container>
+        <AuthProvider>
+          <Theme
+            appearance="light"
+            panelBackground="translucent"
+            accentColor="purple"
+          >
+            <Container className="mx-auto w-9/12">
+              <nav className="">
+                <Navbar />
+              </nav>
+              <div className="grid grid-flow-row grid-cols-12 gap-2 ">
+                <aside className="hidden lg:block lg:col-span-3  bg-purple-100">
+                  <AsideBar />
+                </aside>
+                <main className="col-span-12 lg:col-span-9 h-screen ">
+                  <Card className="h-full">{children}</Card>
+                </main>
+              </div>
+            </Container>
 
-          {/* <ThemePanel /> */}
-        </Theme>
+            {/* <ThemePanel /> */}
+          </Theme>
+        </AuthProvider>
+
         {/* </NextThemeProvider> */}
       </body>
     </html>
