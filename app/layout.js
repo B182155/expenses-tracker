@@ -12,7 +12,8 @@ import AuthProvider from "./auth/Provider";
 // const inter = Inter({ subsets: ["latin"] });
 export const fontSans = FontSans({
   subsets: ["latin"],
-  variable: "--font-sans",
+  // variable: "--font-sans",
+  variable: "--font-inter",
 });
 
 export const metadata = {
@@ -22,7 +23,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         // className={inter.className}
         className={cn(
@@ -47,7 +48,7 @@ export default function RootLayout({ children }) {
                   <AsideBar />
                 </aside>
                 <main className="col-span-12 lg:col-span-9 h-screen ">
-                  <Card className="h-full">{children}</Card>
+                  <Card className="min-h-full">{children}</Card>
                 </main>
               </div>
             </Container>

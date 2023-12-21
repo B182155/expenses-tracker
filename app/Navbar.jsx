@@ -85,7 +85,7 @@ const Navbar = () => {
 const AuthStatus = () => {
   const { status, data: session } = useSession();
 
-  console.log(session);
+  // console.log(session);
 
   if (status === "loading") {
     return <Skeleton width="3rem" />;

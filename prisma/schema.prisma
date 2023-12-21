@@ -10,6 +10,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Group {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String    @unique
+  description String?   @db.String
+  type        String?   @db.String
+  createdBy   String    @map("creator_id") @db.ObjectId
+  creator     User      @relation(name: "creater", fields: [createdBy], references: [id])
+  memberIds   String[]  @db.ObjectId
+  members     User[]    @relation(fields: [memberIds], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  createdGroups Group[]   @relation(name: "creater")
+  GroupIds      String[]  @db.ObjectId
+  groups        Group[]   @relation(fields: [GroupIds], references: [id])
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("users")
+}
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -39,17 +66,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
-}
-
-model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  @@map("users")
 }
 
 model VerificationToken {
