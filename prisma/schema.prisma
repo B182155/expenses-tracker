@@ -19,8 +19,35 @@ model Group {
   creator     User      @relation(name: "creater", fields: [createdBy], references: [id])
   memberIds   String[]  @db.ObjectId
   members     User[]    @relation(fields: [memberIds], references: [id])
+  expenses    Expense[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
+}
+
+model Expense {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  description String
+  amount      Float
+  date        DateTime
+  // category    String   @db.String
+  payerId     String   @db.ObjectId
+  PaidBy      User     @relation(fields: [payerId], references: [id])
+  group       Group    @relation(fields: [groupId], references: [id])
+  groupId     String   @db.ObjectId
+  splits      Split[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Split {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  expense    Expense  @relation(fields: [expenseId], references: [id])
+  expenseId  String   @db.ObjectId
+  friend     User     @relation(fields: [friendId], references: [id])
+  friendId   String   @db.ObjectId
+  amountOwed Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model User {
@@ -34,6 +61,8 @@ model User {
   groups        Group[]   @relation(fields: [GroupIds], references: [id])
   accounts      Account[]
   sessions      Session[]
+  SplittedBils  Split[]
+  ExpensesPaid  Expense[]
 
   @@map("users")
 }

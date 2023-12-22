@@ -47,7 +47,7 @@ import {
 } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
 import { useEffect, useState } from "react";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 // import FriendComponent from "./FriendComponent";
 import prisma from "@/prisma/prismaClient";
 import axios from "axios";
@@ -61,23 +61,13 @@ const formSchema = z.object({
 });
 
 const CreateGroup = () => {
-  const { status, data: session } = useSession();
+  const { status, data: Session } = useSession();
+  // console.log(Session);
 
   const router = useRouter();
-  const [friends, setFriends] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [users, setUsers] = useState([]);
-  // const [userData, setUserData] = useState();
-
-  // const getUserData = async () => {
-  //   try {
-  //     const data = await fetch(`api/users/${session?.user.email}`);
-  //     const usersData = await data.json();
-  //     setUsers(usersData);
-  //     console.log(usersData);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const [friends, setFriends] = useState([]);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -86,24 +76,6 @@ const CreateGroup = () => {
       type: "",
     },
   });
-
-  // 2. Define a submit handler.
-  async function onSubmit(values) {
-    try {
-      const memberIds = friends.map((frnd) => frnd.id);
-
-      const data = { ...values, memberIds };
-
-      await axios.post("api/groups", data);
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
-      router.push("/");
-
-      // console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const types = [
     {
@@ -114,36 +86,70 @@ const CreateGroup = () => {
       value: "Tour",
       label: "Tour",
     },
-    // {
-    //   value: "Friends",
-    //   label: "Friends",
-    // },
+
     {
       value: "Other",
       label: "Other",
     },
   ];
 
-  const friendsList = [
-    { label: "Shiva", value: "shiva" },
-    { label: "Sukesh", value: "sukesh" },
-    { label: "Karthik", value: "karthik" },
-    { label: "Anil", value: "anil" },
-    // { label: "Portuguese", value: "pt" },
-  ];
+  // const friendsList = [
+  //   { label: "Shiva", value: "shiva" },
+  //   { label: "Sukesh", value: "sukesh" },
+  //   { label: "Karthik", value: "karthik" },
+  //   { label: "Anil", value: "anil" },
+  // ];
 
   const getUsers = async () => {
     try {
-      const data = await fetch(`api/users`, { cache: "no-store" });
-      const usersData = await data.json();
-      setUsers(usersData);
-      // console.log(usersData);
-    } catch (error) {}
+      const data = await fetch(`/api/users`, { cache: "no-store" });
+      const users = await data.json();
+      setUsers(users);
+
+      // console.log(users);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserData = async ({ Session }) => {
+    try {
+      const data = await fetch(`/api/users/${Session?.user.email}`);
+      const userData = await data.json();
+      setUserData(userData);
+      // console.log(userData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getUsers();
   }, []);
+  useEffect(() => {
+    getUserData({ Session });
+  }, [Session]);
+
+  // 2. Define a submit handler.
+  async function onSubmit(values) {
+    try {
+      const memberIds = friends.map((frnd) => frnd.id);
+      const createdBy = userData.id;
+      // console.log(createdBy);
+
+      const data = { ...values, memberIds, createdBy };
+
+      await axios.post("api/groups", data);
+      // Do something with the form values.
+      // ✅ This will be type-safe and validated.
+      router.push("/");
+      router.refresh();
+
+      // console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleDeleteFriend = (friendName) => {
     setFriends((prev) => prev.filter((friend) => friend.name !== friendName));
@@ -151,6 +157,7 @@ const CreateGroup = () => {
 
   return (
     <Card className="w-full lg:w-9/12 mx-auto" my="2">
+      {/* <h1>{Session?.user.name}</h1> */}
       <CardHeader>
         <CardTitle>Create A New Group</CardTitle>
         {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
@@ -226,12 +233,17 @@ const CreateGroup = () => {
                               value={user.email}
                               key={user.id}
                               onSelect={() => {
-                                setFriends((prev) => [
-                                  ...new Set([
+                                const userExists = friends.find(
+                                  (friend) => friend.id === user.id
+                                );
+
+                                !userExists &&
+                                  setFriends((prev) => [
                                     ...prev,
                                     { id: user.id, name: user.name },
-                                  ]),
-                                ]);
+                                  ]);
+
+                                // console.log(friends);
                               }}
                             >
                               <Check

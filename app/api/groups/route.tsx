@@ -21,14 +21,14 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const body: Group = await request.json();
-  //   console.log(body);
-  const { title, type, memberIds } = body;
+  // console.log(body);
+  const { title, type, memberIds, createdBy } = body;
 
   const group = await prisma?.group.create({
     data: {
       title,
       type,
-      createdBy: "658198d485cc026358507883",
+      createdBy,
       memberIds,
     },
   });
