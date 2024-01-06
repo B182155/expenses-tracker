@@ -49,11 +49,14 @@
   }
 }
 
-/* @layer base {
+@layer base {
   * {
     @apply border-border;
   }
-  body {
+  /* body {
     @apply bg-background text-foreground;
+  } */
+  h1 {
+    @apply text-lg font-medium font-sans;
   }
-} */
+}

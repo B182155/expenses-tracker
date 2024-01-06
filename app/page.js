@@ -5,8 +5,8 @@ import GotoCreatePageButton from "./GotoCreatePageButton";
 import prisma from "@/prisma/prismaClient";
 import GroupCard from "./GroupCard";
 import Link from "next/link";
-import { group } from "console";
-import { Key } from "lucide-react";
+// import { group } from "console";
+// import { Key } from "lucide-react";
 
 export default async function Home() {
   const groups = await prisma.group.findMany({
@@ -18,8 +18,6 @@ export default async function Home() {
 
   return (
     <>
-      <Card mb="3" variant="surface" className="min-h-1/4"></Card>
-      {/* <Card variant="surface"> */}
       {groups.map((group) => {
         return (
           <Card key={group.id} mb="3">

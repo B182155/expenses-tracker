@@ -1,21 +1,3 @@
-// import { Box, Button, Flex } from "@radix-ui/themes";
-// import Link from "next/link";
-// import React from "react";
-// import { FcMoneyTransfer } from "react-icons/fc";
-
-// const Navbar = () => {
-//   return (
-//     <Flex justify="between" align="center" p="4">
-//       <FcMoneyTransfer className="h-10 w-10" />
-//       <Box>
-//         <Link href="./api/auth/signin">Login</Link>
-//       </Box>
-//     </Flex>
-//   );
-// };
-
-// export default Navbar;
-
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -35,10 +17,10 @@ import { useSession } from "next-auth/react";
 const NavLinks = () => {
   const currentpath = usePathname();
   const navItems = [
-    {
-      name: "Dashboard",
-      link: "/",
-    },
+    // {
+    //   name: "Dashboard",
+    //   link: "/",
+    // },
   ];
   return (
     <Flex gap="4" align="center" px="4">
@@ -61,7 +43,7 @@ const NavLinks = () => {
 
 const Navbar = () => {
   return (
-    <nav className="border-b p-2">
+    <nav>
       <Flex
         direction="row"
         // gap="6"
@@ -73,7 +55,7 @@ const Navbar = () => {
           <Link href="/">
             <FcMoneyTransfer className="h-10 w-10" />
           </Link>
-          <NavLinks />
+          {/* <NavLinks /> */}
         </Flex>
         <AuthStatus />
       </Flex>

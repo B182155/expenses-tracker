@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
       <body
         // className={inter.className}
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased bg-gradient-to-r from-purple-50 via-purple-100 to-purple-50",
           fontSans.variable
         )}
       >
@@ -40,14 +40,16 @@ export default function RootLayout({ children }) {
             accentColor="purple"
           >
             <Container className="mx-auto w-9/12">
-              <nav className="">
+              <Card mb="3" mt="3" variant="classic">
+                {/* <nav className=""> */}
                 <Navbar />
-              </nav>
+                {/* </nav> */}
+              </Card>
               <div className="grid grid-flow-row grid-cols-12 gap-2 ">
-                <aside className="hidden lg:block lg:col-span-3  bg-purple-100">
+                <aside className="hidden lg:block lg:col-span-3 ">
                   <AsideBar />
                 </aside>
-                <main className="col-span-12 lg:col-span-9 h-screen ">
+                <main className="col-span-12 lg:col-span-9 min-h-screen ">
                   <Card className="min-h-full">{children}</Card>
                 </main>
               </div>

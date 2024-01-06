@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/prisma/prismaClient";
 import { Expense } from "@prisma/client";
+// import { string } from "zod";
 
 export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -20,49 +21,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getServerSession(authOptions);
+  const body = await request.json();
 
-  const body: Expense = await request.json();
-
-  const { description, amount, date, payerId, groupId } = body;
-
-  const membersData = await prisma.group.findUnique({
-    where: {
-      id: groupId,
-    },
-    select: {
-      members: true,
-    },
-  });
-
-  const { members } = membersData;
-
-  const amountPerPerson = Math.round(amount / members.length);
-
-  // 1. Generate temporary expense ID
-
-  const temporaryExpenseId = "6585daa6608c5490113294de";
-
-  const data = members.map((member) => {
-    if (member.id === payerId) {
-      return {
-        friendId: member.id,
-        amountOwed: -(amount - amountPerPerson),
-        expenseId: temporaryExpenseId,
-      };
-    } else {
-      return {
-        friendId: member.id,
-        amountOwed: amountPerPerson,
-        expenseId: temporaryExpenseId,
-      };
-    }
-  });
-
-  // 2. Create splits with temporary expense ID
-  const splits = await prisma.split.createMany({
-    data,
-  });
+  const { description, amount, date, payerId, groupId, friends } = body;
 
   // 3. Create the actual expense
 
@@ -76,12 +37,37 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  // 4. Update splits with actual expense ID
-  const actualExpenseId = expense.id;
-  await prisma.split.updateMany({
-    where: { expenseId: temporaryExpenseId },
-    data: { expenseId: actualExpenseId },
+  const expenseId = expense.id;
+
+  const amountPerPerson = Math.round(amount / friends.length);
+
+  const data = friends.map((memberId: string) => {
+    if (memberId === payerId) {
+      return {
+        friendId: memberId,
+        amountOwed: -(amount - amountPerPerson),
+        expenseId,
+      };
+    } else {
+      return {
+        friendId: memberId,
+        amountOwed: amountPerPerson,
+        expenseId,
+      };
+    }
   });
 
-  return NextResponse.json({ expense, splits }, { status: 201 });
+  // 2. Create splits with temporary expense ID
+  const splits = await prisma.split.createMany({
+    data,
+  });
+
+  // // 4. Update splits with actual expense ID
+  // const actualExpenseId = expense.id;
+  // await prisma.split.updateMany({
+  //   where: { expenseId: temporaryExpenseId },
+  //   data: { expenseId: actualExpenseId },
+  // });
+
+  return NextResponse.json({ status: 201 });
 }

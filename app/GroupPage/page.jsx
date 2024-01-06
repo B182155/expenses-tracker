@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { Button, Card } from "@radix-ui/themes";
+import { Button, Callout, Card } from "@radix-ui/themes";
 
 import {
   Command,
@@ -52,6 +52,10 @@ import { useRouter } from "next/navigation";
 import prisma from "@/prisma/prismaClient";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Spinner from "@/app/components/Spinner";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
+
+// import useGetdata from "@/lib/useGetdata";
 
 const formSchema = z.object({
   title: z.string().min(5, {
@@ -68,6 +72,12 @@ const CreateGroup = () => {
   const [userData, setUserData] = useState([]);
   const [users, setUsers] = useState([]);
   const [friends, setFriends] = useState([]);
+
+  const [isSubmitting, setisSubmitting] = useState(false);
+  // const [iserror, setisError] = useState(false);
+  const [error, setError] = useState("");
+
+  // const user = useGetdata();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -93,13 +103,6 @@ const CreateGroup = () => {
     },
   ];
 
-  // const friendsList = [
-  //   { label: "Shiva", value: "shiva" },
-  //   { label: "Sukesh", value: "sukesh" },
-  //   { label: "Karthik", value: "karthik" },
-  //   { label: "Anil", value: "anil" },
-  // ];
-
   const getUsers = async () => {
     try {
       const data = await fetch(`/api/users`, { cache: "no-store" });
@@ -116,8 +119,9 @@ const CreateGroup = () => {
     try {
       const data = await fetch(`/api/users/${Session?.user.email}`);
       const userData = await data.json();
+      // friends?.push(userData);
+
       setUserData(userData);
-      // console.log(userData);
     } catch (error) {
       console.log(error);
     }
@@ -130,24 +134,34 @@ const CreateGroup = () => {
     getUserData({ Session });
   }, [Session]);
 
+  // useEffect(() => {
+  //   if (userData) {
+  //     setFriends([{ id: userData?.id, name: userData?.name }]);
+  //   }
+  // }, []);
+
   // 2. Define a submit handler.
   async function onSubmit(values) {
     try {
+      setisSubmitting(true);
       const memberIds = friends.map((frnd) => frnd.id);
       const createdBy = userData.id;
-      // console.log(createdBy);
 
       const data = { ...values, memberIds, createdBy };
 
       await axios.post("api/groups", data);
       // Do something with the form values.
       // ✅ This will be type-safe and validated.
+
       router.push("/");
       router.refresh();
 
       // console.log(data);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
+      // console.log(error);
+    } finally {
+      setisSubmitting(false);
     }
   }
 
@@ -157,6 +171,14 @@ const CreateGroup = () => {
 
   return (
     <Card className="w-full lg:w-9/12 mx-auto" my="2">
+      {error && (
+        <Callout.Root color="red" className="mb-2">
+          <Callout.Icon>
+            <InfoCircledIcon />
+          </Callout.Icon>
+          <Callout.Text>{`Something went wrong`}</Callout.Text>
+        </Callout.Root>
+      )}
       {/* <h1>{Session?.user.name}</h1> */}
       <CardHeader>
         <CardTitle>Create A New Group</CardTitle>
@@ -182,7 +204,7 @@ const CreateGroup = () => {
 
             {friends.length ? (
               <div className="w-full lg:w-7/12">
-                {friends.map((friend, index) => (
+                {friends.map((friend) => (
                   <FriendComponent
                     key={friend.id}
                     name={friend.name}
@@ -215,7 +237,7 @@ const CreateGroup = () => {
                                 ? users.find(
                                     (user) => user.email === field.value
                                   )?.name
-                                : "Select friend"}
+                                : "Select Users..."}
                             </p>
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </div>
@@ -227,7 +249,6 @@ const CreateGroup = () => {
                         <CommandInput placeholder="Search email..." />
                         <CommandEmpty>No user found.</CommandEmpty>
                         <CommandGroup className="overflow-auto">
-                          {/* {console.log(friends)} */}
                           {users.map((user) => (
                             <CommandItem
                               value={user.email}
@@ -242,8 +263,6 @@ const CreateGroup = () => {
                                     ...prev,
                                     { id: user.id, name: user.name },
                                   ]);
-
-                                // console.log(friends);
                               }}
                             >
                               <Check
@@ -292,7 +311,15 @@ const CreateGroup = () => {
                 </FormItem>
               )}
             />
-            <Button onClick={form.handleSubmit(onSubmit)}>Save</Button>
+            <Button
+              disabled={isSubmitting}
+              onClick={form.handleSubmit(onSubmit)}
+              className="w-7/12"
+            >
+              {isSubmitting ? `Saving...  ` : "Save"}
+
+              {isSubmitting && <Spinner />}
+            </Button>
           </form>
         </Form>
       </CardContent>

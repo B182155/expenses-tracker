@@ -18,5 +18,6 @@ export async function GET(request: NextRequest, { params }) {
       members: true,
     },
   });
+  // console.log(users);
   return NextResponse.json(users);
 }
