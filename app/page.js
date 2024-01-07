@@ -1,6 +1,5 @@
-import { Box, Button, Card } from "@radix-ui/themes";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { Box, Button, Card, Flex } from "@radix-ui/themes";
+
 import GotoCreatePageButton from "./GotoCreatePageButton";
 import prisma from "@/prisma/prismaClient";
 import GroupCard from "./GroupCard";
@@ -17,7 +16,8 @@ export default async function Home() {
   });
 
   return (
-    <>
+    <Flex direction="column-reverse" gap="0" mt="2">
+      <GotoCreatePageButton />
       {groups.map((group) => {
         return (
           <Card key={group.id} mb="3">
@@ -28,8 +28,6 @@ export default async function Home() {
         );
       })}
       {/* </Card> */}
-
-      <GotoCreatePageButton />
-    </>
+    </Flex>
   );
 }

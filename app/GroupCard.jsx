@@ -1,9 +1,10 @@
 import React from "react";
+import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
 
 const GroupCard = ({ group }) => {
   return (
     <div>
-      <h1>{group.title}</h1>
+      <h1>{capitalizeFirstLetter(group.title)}</h1>
 
       <p>{group.createdAt.toDateString()}</p>
 

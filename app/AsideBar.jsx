@@ -6,7 +6,7 @@ import classnames from "classnames";
 import { MdGroupAdd } from "react-icons/md";
 import prisma from "@/prisma/prismaClient";
 import GroupCard from "./GroupCard";
-
+import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
 const NavLinks = async () => {
   // const currentpath = usePathname();
   const navItems = [
@@ -49,11 +49,11 @@ const NavLinks = async () => {
             <MdGroupAdd className="w-9 h-9 p-1 rounded-md bg-purple-100" />
           </Link>
         </Flex>
-        <Flex direction="column" gap="2" mt="5">
+        <Flex direction="column-reverse" gap="2" mt="5">
           {groups.map((group) => {
             return (
               <Link key={group.id} mb="3" href={`/GroupPage/${group.id}`}>
-                <Card size="1">{group.title}</Card>
+                <Card size="1">{capitalizeFirstLetter(group.title)}</Card>
               </Link>
             );
           })}
