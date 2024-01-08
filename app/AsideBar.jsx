@@ -34,7 +34,7 @@ const NavLinks = async () => {
                 "active:text-gray-900": true,
               })}
             >
-              {item.name}
+              <h3 className="font-serif font-medium text-base">{item.name}</h3>
             </Link>
           </Box>
         ))}
@@ -43,7 +43,7 @@ const NavLinks = async () => {
       <Card className="w-full min-h-screen ">
         <Flex direction="row" justify="between" align="center">
           <Heading color="purple" size="5">
-            GROUPS
+            <h3 className="font-serif font-extrabold text-xl">GROUPS</h3>
           </Heading>
           <Link href="/GroupPage">
             <MdGroupAdd className="w-9 h-9 p-1 rounded-md bg-purple-100" />
@@ -53,7 +53,11 @@ const NavLinks = async () => {
           {groups.map((group) => {
             return (
               <Link key={group.id} mb="3" href={`/GroupPage/${group.id}`}>
-                <Card size="1">{capitalizeFirstLetter(group.title)}</Card>
+                <Card size="1">
+                  <h3 className="font-serif font-medium text-base">
+                    {capitalizeFirstLetter(group.title)}
+                  </h3>
+                </Card>
               </Link>
             );
           })}
@@ -65,7 +69,7 @@ const NavLinks = async () => {
 
 const AsideBar = async () => {
   return (
-    <Card className="h-full">
+    <Card className="h-full" style={{ backgroundColor: "#E6FFFD" }}>
       <NavLinks />
     </Card>
   );

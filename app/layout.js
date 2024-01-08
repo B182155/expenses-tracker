@@ -40,17 +40,27 @@ export default function RootLayout({ children }) {
             accentColor="purple"
           >
             <Container className="mx-auto w-9/12">
-              <Card mb="3" mt="3" variant="classic">
+              <Card
+                mb="3"
+                mt="3"
+                variant="classic"
+                style={{ backgroundColor: "#E6FFFD" }}
+              >
                 {/* <nav className=""> */}
                 <Navbar />
                 {/* </nav> */}
               </Card>
               <div className="grid grid-flow-row grid-cols-12 gap-2 ">
-                <aside className="hidden lg:block lg:col-span-3 ">
+                <aside className="hidden lg:block lg:col-span-3  ">
                   <AsideBar />
                 </aside>
                 <main className="col-span-12 lg:col-span-9 min-h-screen ">
-                  <Card className="min-h-full">{children}</Card>
+                  <Card
+                    className="min-h-full"
+                    style={{ backgroundColor: "#E6FFFD" }}
+                  >
+                    {children}
+                  </Card>
                 </main>
               </div>
             </Container>
