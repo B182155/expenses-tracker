@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from 'lucide-react';
 
 // import { cn } from "../../lib/utils";
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 import {
   //   Card as card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Box, Button, Card, Flex, Grid } from "@radix-ui/themes";
+} from '@/components/ui/card';
+import { Box, Button, Card, Flex, Grid } from '@radix-ui/themes';
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/popover';
 
 import {
   Select,
@@ -29,7 +29,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 import {
   Form,
@@ -38,26 +38,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
-import { useEffect, useState } from "react";
-import { notFound, useRouter } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { notFound, useRouter } from 'next/navigation';
 // import FriendComponent from "./FriendComponent";
-import prisma from "@/prisma/prismaClient";
-import axios from "axios";
-import { useSession } from "next-auth/react";
+import prisma from '@/prisma/prismaClient';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
 
-import { IndianRupee } from "lucide-react";
+import { IndianRupee } from 'lucide-react';
 
-import { format, parseISO } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
+import { format, parseISO } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
 
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from '@/components/ui/checkbox';
 
-import Spinner from "@/app/components/Spinner";
+import Spinner from '@/app/components/Spinner';
 
 const CreateExpensePage = ({ params }) => {
   // console.log(params);
@@ -72,7 +72,7 @@ const CreateExpensePage = ({ params }) => {
   const getfriends = async () => {
     try {
       const data = await fetch(`/api/groups/${params.id}`, {
-        cache: "no-store",
+        cache: 'no-store',
       });
       const friendsData = await data.json();
       const { members } = friendsData;
@@ -112,21 +112,21 @@ const CreateExpensePage = ({ params }) => {
     description: z
       .string()
       .min(10, {
-        message: "description must be at least 5 characters.",
+        message: 'description must be at least 5 characters.',
       })
-      .max(150, { message: "description must be at least 150 characters" }),
+      .max(150, { message: 'description must be at least 150 characters' }),
 
     amount: z.string(),
-    date: z.date().optional().default(new Date().toISOString()),
+    date: z.date().optional(),
 
     payerId: z.string({
-      required_error: "Please select an email to display.",
+      required_error: 'Please select an email to display.',
     }),
 
     friends: z
       .array(z.string())
       .refine((value) => value.some((friend) => friend), {
-        message: "You have to select at least one user.",
+        message: 'You have to select at least one user.',
       }),
   });
 
@@ -137,7 +137,7 @@ const CreateExpensePage = ({ params }) => {
     resolver: zodResolver(formSchema),
     reValidateMode: true,
     defaultValues: {
-      description: "",
+      description: '',
       // payerId: `${userData?.name}`,
       // date: z.optional(z.date()).default(Date()),
       // date: z.date().optional().default(new Date().toISOString()),
@@ -158,7 +158,7 @@ const CreateExpensePage = ({ params }) => {
 
       const data = { description, amount, date, payerId, groupId, friends };
 
-      await axios.post("/api/expenses", data);
+      await axios.post('/api/expenses', data);
       // // Do something with the form values.
       // // ✅ This will be type-safe and validated.
       router.push(`/GroupPage/${params.id}`);
@@ -175,28 +175,28 @@ const CreateExpensePage = ({ params }) => {
 
   const items = [
     {
-      id: "recents",
-      label: "Recents",
+      id: 'recents',
+      label: 'Recents',
     },
     {
-      id: "home",
-      label: "Home",
+      id: 'home',
+      label: 'Home',
     },
     {
-      id: "applications",
-      label: "Applications",
+      id: 'applications',
+      label: 'Applications',
     },
     {
-      id: "desktop",
-      label: "Desktop",
+      id: 'desktop',
+      label: 'Desktop',
     },
     {
-      id: "downloads",
-      label: "Downloads",
+      id: 'downloads',
+      label: 'Downloads',
     },
     {
-      id: "documents",
-      label: "Documents",
+      id: 'documents',
+      label: 'Documents',
     },
   ];
 
@@ -208,20 +208,30 @@ const CreateExpensePage = ({ params }) => {
   // });
 
   return (
-    <Card className="w-full lg:w-9/12 mx-auto" my="2">
+    <Card
+      className="w-full lg:w-9/12 mx-auto"
+      my="2"
+    >
       <CardHeader>
-        <CardTitle>Add an Expense</CardTitle>
+        <CardTitle className="text-gray-600 font-serif font-semibold text-xl">
+          Add an Expense
+        </CardTitle>
         {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="text-gray-600 font-serif font-semibold text-base">
+                    Description
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Enter description ..."
@@ -235,8 +245,14 @@ const CreateExpensePage = ({ params }) => {
               )}
             />
 
-            <Grid columns={{ initial: "1", md: "2" }} gap="6">
-              <Flex direction="column" gap="5">
+            <Grid
+              columns={{ initial: '1', md: '2' }}
+              gap="6"
+            >
+              <Flex
+                direction="column"
+                gap="5"
+              >
                 <FormField
                   control={form.control}
                   name="amount"
@@ -247,7 +263,12 @@ const CreateExpensePage = ({ params }) => {
                         {/* <Input type="number">
                       
                     </Input> */}
-                        <Flex align="center" gap="2" className="" pl="2">
+                        <Flex
+                          align="center"
+                          gap="2"
+                          className=""
+                          pl="2"
+                        >
                           <IndianRupee />
                           <Input
                             // className="lg:w-5/12"
@@ -276,13 +297,19 @@ const CreateExpensePage = ({ params }) => {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Paid By" />
+                            <SelectValue
+                              placeholder="Paid By"
+                              className="text-gray-600 font-serif font-medium text-base"
+                            />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                           {friends.map((friend) => {
                             return (
-                              <SelectItem value={friend.id} key={friend.id}>
+                              <SelectItem
+                                value={friend.id}
+                                key={friend.id}
+                              >
                                 {friend.name}
                               </SelectItem>
                             );
@@ -311,29 +338,34 @@ const CreateExpensePage = ({ params }) => {
                         >
                           <FormControl>
                             <Button
-                              variant={"outline"}
+                              variant={'outline'}
                               className={cn(
-                                " pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                ' pl-3 text-left font-normal',
+                                !field.value && 'text-muted-foreground'
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "PPP")
+                                format(field.value, 'PPP')
                               ) : (
-                                // : format(Date.now(), "PPP")}
-                                <span>Pick date</span>
+                                // : format(Date.now(), 'PPP')
+                                <span className="font-serif font-medium text-base">
+                                  Pick date
+                                </span>
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
+                        <PopoverContent
+                          className="w-auto p-0"
+                          align="start"
+                        >
                           <Calendar
                             mode="single"
                             selected={field.value}
                             onSelect={field.onChange}
                             disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
+                              date > new Date() || date < new Date('1900-01-01')
                             }
                             initialFocus
                           />
@@ -352,7 +384,7 @@ const CreateExpensePage = ({ params }) => {
                   render={() => (
                     <FormItem>
                       <div className="mb-4">
-                        <FormLabel className="text-base">
+                        <FormLabel className="text-gray-600 font-serif font-semibold text-base">
                           Select Members
                         </FormLabel>
                         {/* <FormDescription>
@@ -407,7 +439,15 @@ const CreateExpensePage = ({ params }) => {
               onClick={form.handleSubmit(onSubmit)}
               className="w-6/12"
             >
-              {isSubmitting ? `Saving...  ` : "Save"}
+              {isSubmitting ? (
+                <h2 className="text-gray-200 font-serif font-medium text-base">
+                  Saving...{' '}
+                </h2>
+              ) : (
+                <h2 className="text-gray-200 font-serif font-medium text-base">
+                  Save
+                </h2>
+              )}
 
               {isSubmitting && <Spinner />}
             </Button>
@@ -418,6 +458,6 @@ const CreateExpensePage = ({ params }) => {
   );
 };
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default CreateExpensePage;

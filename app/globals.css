@@ -61,4 +61,9 @@
   h1 {
     @apply text-lg font-medium font-sans;
   }
+
+  h2,
+  h3 {
+    @apply text-sm font-medium font-serif lg:text-lg lg:font-serif lg:font-semibold;
+  }
 }

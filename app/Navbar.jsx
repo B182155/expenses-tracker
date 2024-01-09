@@ -1,36 +1,40 @@
-"use client";
+'use client';
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from 'next/navigation';
 
-import { FcMoneyTransfer } from "react-icons/fc";
+import { FcMoneyTransfer } from 'react-icons/fc';
 
-import { Box, Flex } from "@radix-ui/themes";
-import classnames from "classnames";
-import Link from "next/link";
+import { Box, Flex } from '@radix-ui/themes';
+import classnames from 'classnames';
+import Link from 'next/link';
 
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import * as Avatar from "@radix-ui/react-avatar";
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import * as Avatar from '@radix-ui/react-avatar';
 
-import Skeleton from "./components/Skeleton";
-import { useSession } from "next-auth/react";
+import Skeleton from './components/Skeleton';
+import { useSession } from 'next-auth/react';
 
 const NavLinks = () => {
   const currentpath = usePathname();
   const navItems = [
-    // {
-    //   name: "Dashboard",
-    //   link: "/",
-    // },
+    {
+      name: 'Dashboard',
+      link: '/',
+    },
   ];
   return (
-    <Flex gap="4" align="center" px="4">
+    <Flex
+      gap="4"
+      align="center"
+      px="4"
+    >
       {navItems.map((item) => (
         <Box key={item.name}>
           <Link
             href={item.link}
             className={classnames({
-              "text-gray-600 hover:text-gray-900 transition-colors": true,
-              "active:text-gray-900": currentpath === item.link,
+              'text-gray-600 hover:text-gray-900 transition-colors': true,
+              'active:text-gray-900': currentpath === item.link,
             })}
           >
             {item.name}
@@ -51,11 +55,13 @@ const Navbar = () => {
         align="center"
         height="auto"
       >
-        <Flex align="center" gap="4">
+        <Flex
+          align="center"
+          gap="4"
+        >
           <Link href="/">
             <FcMoneyTransfer className="h-10 w-10" />
           </Link>
-          {/* <NavLinks /> */}
         </Flex>
         <AuthStatus />
       </Flex>
@@ -69,17 +75,17 @@ const AuthStatus = () => {
 
   // console.log(session);
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <Skeleton width="3rem" />;
   }
 
-  if (status === "unauthenticated") {
+  if (status === 'unauthenticated') {
     return <Link href="api/auth/signin">Login</Link>;
   }
 
   return (
     <Box>
-      {status === "authenticated" && (
+      {status === 'authenticated' && (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
             <Avatar.Root>

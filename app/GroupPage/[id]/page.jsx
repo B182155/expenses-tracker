@@ -1,22 +1,22 @@
-import GroupCard from "@/app/GroupCard";
-import { Box, Button, Card, Flex, Grid } from "@radix-ui/themes";
-import React from "react";
+import GroupCard from '@/app/GroupCard';
+import { Box, Button, Card, Flex, Grid } from '@radix-ui/themes';
+import React from 'react';
 // import GotoCreateExpensesPage from "./GotoCreateExpensesPage";
-import Link from "next/link";
+import Link from 'next/link';
 
-import { IndianRupee, User } from "lucide-react";
+import { IndianRupee, User } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 // import { capitalizeFirstLetter } from "../../components/CapitalizeFirstLetter";
-import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from '@/app/components/capitalizeFirstLetter';
 // import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
 
-import { Home, CarTaxiFront as Tour, Album as Other } from "lucide-react";
+import { Home, CarTaxiFront as Tour, Album as Other } from 'lucide-react';
 // import { Box, Flex, Grid } from "@radix-ui/themes";
 
 // import UserData from "@/lib/useGetdata";
@@ -52,8 +52,8 @@ const GroupDetailsPage = async ({ params: { id } }) => {
 
   const GetDate_Month = ({ date }) => {
     const Date = date.getDate();
-    const monthString = date.toLocaleString("default", {
-      month: "long",
+    const monthString = date.toLocaleString('default', {
+      month: 'long',
     });
 
     return (
@@ -74,17 +74,23 @@ const GroupDetailsPage = async ({ params: { id } }) => {
 
   return (
     <>
-      <Card mb="3" className="min-h-full">
-        <Grid columns={{ initial: "1", sm: "5" }}>
+      <Card
+        mb="3"
+        className="min-h-full"
+      >
+        <Grid columns={{ initial: '1', sm: '5' }}>
           <Box className="col-span-3">
             <DisplayGroupDetails group={GroupData} />
           </Box>
-          <Box className="col-span-2">
+          <Box className="ml-5 col-span-2">
             <h1 className="font-serif font-semibold text-xl text-gray-500">
               Members Involved
             </h1>
             {GroupData?.members?.map((user) => (
-              <h2 className="font-serif font-medium text-base" key={user.id}>
+              <h2
+                className="font-serif font-medium text-base"
+                key={user.id}
+              >
                 {user.name}
               </h2>
             ))}
@@ -95,10 +101,16 @@ const GroupDetailsPage = async ({ params: { id } }) => {
         href={`/GroupPage/${id}/CreateExpensePage`}
         className="inline-block w-full mb-3 rounded-md"
       >
-        <Button className="w-1/2">Add Expense</Button>
+        <Button className="w-1/2 text-gray-200 font-serif font-medium text-base">
+          Add Expense
+        </Button>
       </Link>
       <Card className="min-h-full ">
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full"
+        >
           <div className="flex flex-col-reverse">
             {expenses?.map((expense) => {
               return (
@@ -108,19 +120,22 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                   key={expense.id}
                   className="border-b-2 border-purple-200"
                 >
-                  <AccordionTrigger className="hover:no-underline bg-purple-100 rounded-md shadow-md ">
+                  <AccordionTrigger className="hover:no-underline bg-purple-100 rounded-md shadow-md pr-4 ">
                     <div className="flex gap-4 items-center w-8/12">
                       <GetDate_Month date={expense.date} />
                       <div className="flex flex-col justify-start items-start">
-                        <h3 className="text-2xl font-serif font-normal">
+                        <h3 className="text-xl font-serif font-medium text-gray-700">
                           {capitalizeFirstLetter(expense.description)}
                         </h3>
                         <h2 className="text-gray-600 text-sm font-sans font-medium">
                           <span>
-                            {expense?.PaidBy.name} paid{" "}
-                            <IndianRupee className="inline-block" size="20" />
+                            {expense?.PaidBy.name} paid{' '}
+                            <IndianRupee
+                              className="inline-block"
+                              size="20"
+                            />
                             <span className="text-xl font-semibold">
-                              {" "}
+                              {' '}
                               {expense.amount}
                             </span>
                           </span>
@@ -136,49 +151,64 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                     </div> */}
                   </AccordionTrigger>
                   <AccordionContent className="mx-5 my-5">
-                    <h1 className="mb-2">
-                      {capitalizeFirstLetter(expense.description)}
+                    <h1 className="mb-2 text-gray-700 font-serif font-semibold text-base">
+                      <span>{capitalizeFirstLetter(expense.description)}</span>
+                      {'  '}
+                      <span className="text-purple-600">
+                        {' '}
+                        INR {expense.amount}{' '}
+                      </span>
                     </h1>
                     <div className="flex gap-2 items-center w-8/12">
-                      <div className="text-base font-serif font-semibold">
-                        {" "}
-                        {expense.date.toLocaleString()}
+                      <div className="text-base font-serif font-semibold text-gray-600">
+                        {expense.date.toDateString()}
                       </div>
                     </div>
                     <div className="mt-5">
                       <div className="flex flex-col">
                         <h1>
                           <span>
-                            {expense?.PaidBy.name} paid{" "}
-                            <IndianRupee className="inline-block" size="20" />
+                            <span className="font-semibold font-serif">
+                              {expense?.PaidBy.name}
+                            </span>{' '}
+                            paid{' '}
+                            <IndianRupee
+                              className="inline-block"
+                              size="20"
+                            />
                             {expense.amount}
                           </span>
                         </h1>
 
                         {expense.splits.map((split) => (
-                          <p key={split.id}>
-                            {" "}
+                          <p
+                            className="ml-2 border-l-2 border-purple-600"
+                            key={split.id}
+                          >
+                            <span className="text-purple-700">{'--->'}</span>
                             <span>
-                              {names.get(split.friendId)}
+                              <span className="font-medium font-serif">
+                                {names.get(split.friendId)}
+                              </span>
                               {split.amountOwed < 0 ? (
                                 <span>
-                                  {" "}
-                                  Lent{" "}
+                                  {' '}
+                                  Lent{' '}
                                   <IndianRupee
                                     className="inline-block"
                                     size="18"
-                                  />{" "}
-                                  {Math.abs(split.amountOwed)}{" "}
+                                  />{' '}
+                                  {Math.abs(split.amountOwed)}{' '}
                                 </span>
                               ) : (
                                 <span>
-                                  {" "}
-                                  Owe{" "}
+                                  {' '}
+                                  Owe{' '}
                                   <IndianRupee
                                     className="inline-block"
                                     size="18"
-                                  />{" "}
-                                  {split.amountOwed}{" "}
+                                  />{' '}
+                                  {split.amountOwed}{' '}
                                 </span>
                               )}
                             </span>
@@ -205,9 +235,9 @@ const DisplayGroupDetails = ({ group }) => {
 
   const renderIcon = (iconName) => {
     switch (iconName) {
-      case "Home":
+      case 'Home':
         return <Home color="purple" />;
-      case "Tour":
+      case 'Tour':
         return <Tour color="purple" />;
       // Add more cases for other icons if needed
       default:
@@ -221,9 +251,13 @@ const DisplayGroupDetails = ({ group }) => {
       gapY="2"
       // columns={{ initial: "3", sm: "7" }}
       shrink="1"
-      rows={{ initial: "2", sm: "0" }}
+      rows={{ initial: '2', sm: '0' }}
     >
-      <Flex direction="row" gap="3" align="center">
+      <Flex
+        direction="row"
+        gap="3"
+        align="center"
+      >
         <Box className="ml-5  scale-150 ">{renderIcon(iconName)}</Box>
         <Box className="ml-5  col-span-2">
           <h3 className="text-xl font-serif font-semibold text-gray-500">
@@ -235,7 +269,7 @@ const DisplayGroupDetails = ({ group }) => {
           </h2>
         </Box>
       </Flex>
-      <Box className="col-span-2 ml-3">
+      <Box className="ml-5 col-span-2">
         <p className="text-base font-serif font-medium text-gray-500">
           Created By
         </p>
