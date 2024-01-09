@@ -4,10 +4,6 @@ import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
 import { Home, CarTaxiFront as Tour, Album as Other } from "lucide-react";
 import { Box, Flex, Grid } from "@radix-ui/themes";
 
-const Icon = ({ name }) => {
-  return <name />;
-};
-
 const GroupCard = ({ group }) => {
   const iconName = group.type;
 

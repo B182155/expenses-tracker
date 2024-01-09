@@ -14,6 +14,10 @@ import {
 
 // import { capitalizeFirstLetter } from "../../components/CapitalizeFirstLetter";
 import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
+// import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
+
+import { Home, CarTaxiFront as Tour, Album as Other } from "lucide-react";
+// import { Box, Flex, Grid } from "@radix-ui/themes";
 
 // import UserData from "@/lib/useGetdata";
 
@@ -72,13 +76,17 @@ const GroupDetailsPage = async ({ params: { id } }) => {
     <>
       <Card mb="3" className="min-h-full">
         <Grid columns={{ initial: "1", sm: "5" }}>
-          <Box className="col-span-4">
-            <GroupCard group={GroupData} />
+          <Box className="col-span-3">
+            <DisplayGroupDetails group={GroupData} />
           </Box>
-          <Box>
-            <h1>Members Involved</h1>
+          <Box className="col-span-2">
+            <h1 className="font-serif font-semibold text-xl text-gray-500">
+              Members Involved
+            </h1>
             {GroupData?.members?.map((user) => (
-              <h2 key={user.id}>{user.name}</h2>
+              <h2 className="font-serif font-medium text-base" key={user.id}>
+                {user.name}
+              </h2>
             ))}
           </Box>
         </Grid>
@@ -100,7 +108,7 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                   key={expense.id}
                   className="border-b-2 border-purple-200"
                 >
-                  <AccordionTrigger className="hover:no-underline bg-cyan-50 rounded-md shadow-md ">
+                  <AccordionTrigger className="hover:no-underline bg-purple-100 rounded-md shadow-md ">
                     <div className="flex gap-4 items-center w-8/12">
                       <GetDate_Month date={expense.date} />
                       <div className="flex flex-col justify-start items-start">
@@ -191,3 +199,50 @@ const GroupDetailsPage = async ({ params: { id } }) => {
 };
 
 export default GroupDetailsPage;
+
+const DisplayGroupDetails = ({ group }) => {
+  const iconName = group.type;
+
+  const renderIcon = (iconName) => {
+    switch (iconName) {
+      case "Home":
+        return <Home color="purple" />;
+      case "Tour":
+        return <Tour color="purple" />;
+      // Add more cases for other icons if needed
+      default:
+        return <Other color="purple" />;
+    }
+  };
+  return (
+    <Grid
+      align="center"
+      gapX="5"
+      gapY="2"
+      // columns={{ initial: "3", sm: "7" }}
+      shrink="1"
+      rows={{ initial: "2", sm: "0" }}
+    >
+      <Flex direction="row" gap="3" align="center">
+        <Box className="ml-5  scale-150 ">{renderIcon(iconName)}</Box>
+        <Box className="ml-5  col-span-2">
+          <h3 className="text-xl font-serif font-semibold text-gray-500">
+            {capitalizeFirstLetter(group.title)}
+          </h3>
+
+          <h2 className="text-sm font-serif font-semibold text-purple-400">
+            {group.createdAt.toDateString()}
+          </h2>
+        </Box>
+      </Flex>
+      <Box className="col-span-2 ml-3">
+        <p className="text-base font-serif font-medium text-gray-500">
+          Created By
+        </p>
+        <h2 className="text-xl font-serif font-semibold text-gray-500">
+          {group.creator.name}
+        </h2>
+      </Box>
+    </Grid>
+  );
+};
