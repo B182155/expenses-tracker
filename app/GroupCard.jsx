@@ -7,6 +7,10 @@ import { Box, Flex, Grid } from '@radix-ui/themes';
 const GroupCard = ({ group }) => {
   const iconName = group.type;
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   const renderIcon = (iconName) => {
     switch (iconName) {
       case 'Home':

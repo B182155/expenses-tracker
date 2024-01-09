@@ -1,18 +1,24 @@
 // "use client";
-import { Box, Card, Flex, Heading } from "@radix-ui/themes";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import classnames from "classnames";
-import { MdGroupAdd } from "react-icons/md";
-import prisma from "@/prisma/prismaClient";
-import GroupCard from "./GroupCard";
-import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
+import { Box, Card, Flex, Heading } from '@radix-ui/themes';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import classnames from 'classnames';
+import { MdGroupAdd } from 'react-icons/md';
+import prisma from '@/prisma/prismaClient';
+import GroupCard from './GroupCard';
+// import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from '@/app/components/capitalizeFirstLetter';
+
 const NavLinks = async () => {
   // const currentpath = usePathname();
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   const navItems = [
     {
-      name: "Dashboard",
-      link: "/",
+      name: 'Dashboard',
+      link: '/',
     },
   ];
 
@@ -23,15 +29,18 @@ const NavLinks = async () => {
     },
   });
   return (
-    <Flex gap="4" direction="column">
+    <Flex
+      gap="4"
+      direction="column"
+    >
       <Card className="w-full">
         {navItems.map((item) => (
           <Box key={item.name}>
             <Link
               href={item.link}
               className={classnames({
-                "text-gray-600 hover:text-gray-900 transition-colors": true,
-                "active:text-gray-900": true,
+                'text-gray-600 hover:text-gray-900 transition-colors': true,
+                'active:text-gray-900': true,
               })}
             >
               <h3 className="font-serif font-medium text-lg">{item.name}</h3>
@@ -41,18 +50,33 @@ const NavLinks = async () => {
       </Card>
 
       <Card className="w-full min-h-screen ">
-        <Flex direction="row" justify="between" align="center">
-          <Heading color="purple" size="5">
+        <Flex
+          direction="row"
+          justify="between"
+          align="center"
+        >
+          <Heading
+            color="purple"
+            size="5"
+          >
             <h3 className="font-serif font-extrabold text-xl">GROUPS</h3>
           </Heading>
           <Link href="/GroupPage">
             <MdGroupAdd className="w-9 h-9 p-1 rounded-md bg-purple-100" />
           </Link>
         </Flex>
-        <Flex direction="column-reverse" gap="2" mt="5">
+        <Flex
+          direction="column-reverse"
+          gap="2"
+          mt="5"
+        >
           {groups.map((group) => {
             return (
-              <Link key={group.id} mb="3" href={`/GroupPage/${group.id}`}>
+              <Link
+                key={group.id}
+                mb="3"
+                href={`/GroupPage/${group.id}`}
+              >
                 <Card size="1">
                   <h3 className="font-serif font-medium text-base">
                     {capitalizeFirstLetter(group.title)}
@@ -71,7 +95,7 @@ const AsideBar = async () => {
   return (
     <Card
       className="h-full"
-      style={{ backgroundColor: "var(--background-color)" }}
+      style={{ backgroundColor: 'var(--background-color)' }}
     >
       <NavLinks />
     </Card>

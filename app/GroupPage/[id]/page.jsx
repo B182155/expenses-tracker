@@ -15,8 +15,10 @@ import {
 import DeleteExpenseButton from './DeleteExpense';
 
 // import { capitalizeFirstLetter } from "../../components/CapitalizeFirstLetter";
-import { capitalizeFirstLetter } from '@/app/components/capitalizeFirstLetter';
+// import { capitalizeFirstLetter } from '@/app/components/capitalizeFirstLetter';
 // import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
+
+import { capitalizeFirstLetter } from '@/app/components/capitalizeFirstLetter';
 
 import { Home, CarTaxiFront as Tour, Album as Other } from 'lucide-react';
 // import { Box, Flex, Grid } from "@radix-ui/themes";
@@ -71,6 +73,10 @@ const GroupDetailsPage = async ({ params: { id } }) => {
   // function capitalizeFirstLetter(string) {
   //   return string.charAt(0).toUpperCase() + string.slice(1);
   // }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   return (
     <>
