@@ -43,8 +43,9 @@ export default function RootLayout({ children }) {
               <Card
                 mb="3"
                 mt="3"
+                className="p-2"
                 variant="classic"
-                style={{ backgroundColor: "#E6FFFD" }}
+                style={{ backgroundColor: "var(--background-color)" }}
               >
                 {/* <nav className=""> */}
                 <Navbar />
@@ -57,7 +58,7 @@ export default function RootLayout({ children }) {
                 <main className="col-span-12 lg:col-span-9 min-h-screen ">
                   <Card
                     className="min-h-full"
-                    style={{ backgroundColor: "#E6FFFD" }}
+                    style={{ backgroundColor: "var(--background-color)" }}
                   >
                     {children}
                   </Card>

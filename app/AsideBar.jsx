@@ -34,7 +34,7 @@ const NavLinks = async () => {
                 "active:text-gray-900": true,
               })}
             >
-              <h3 className="font-serif font-medium text-base">{item.name}</h3>
+              <h3 className="font-serif font-medium text-lg">{item.name}</h3>
             </Link>
           </Box>
         ))}
@@ -69,7 +69,10 @@ const NavLinks = async () => {
 
 const AsideBar = async () => {
   return (
-    <Card className="h-full" style={{ backgroundColor: "#E6FFFD" }}>
+    <Card
+      className="h-full"
+      style={{ backgroundColor: "var(--background-color)" }}
+    >
       <NavLinks />
     </Card>
   );

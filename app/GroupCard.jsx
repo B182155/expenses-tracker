@@ -1,15 +1,55 @@
 import React from "react";
 import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
 
+import { Home, CarTaxiFront as Tour, Album as Other } from "lucide-react";
+import { Box, Flex, Grid } from "@radix-ui/themes";
+
+const Icon = ({ name }) => {
+  return <name />;
+};
+
 const GroupCard = ({ group }) => {
+  const iconName = group.type;
+
+  const renderIcon = (iconName) => {
+    switch (iconName) {
+      case "Home":
+        return <Home color="purple" />;
+      case "Tour":
+        return <Tour color="purple" />;
+      // Add more cases for other icons if needed
+      default:
+        return <Other color="purple" />;
+    }
+  };
   return (
-    <div>
-      <h1>{capitalizeFirstLetter(group.title)}</h1>
+    <Grid
+      align="center"
+      gapX="5"
+      gapY="2"
+      columns={{ initial: "3", sm: "7" }}
+      shrink="1"
+      rows={{ initial: "2", sm: "0" }}
+    >
+      <Box className=" ml-5 md:ml-10 scale-150 ">{renderIcon(iconName)}</Box>
+      <Box className="col-span-2">
+        <h3 className="text-xl font-serif font-semibold text-gray-500">
+          {capitalizeFirstLetter(group.title)}
+        </h3>
 
-      <p>{group.createdAt.toDateString()}</p>
-
-      <h2>{group.creator.name}</h2>
-    </div>
+        <h2 className="text-sm font-serif font-semibold text-purple-400">
+          {group.createdAt.toDateString()}
+        </h2>
+      </Box>
+      <Box className="col-span-2 ml-3">
+        <p className="text-base font-serif font-medium text-gray-500">
+          Created By
+        </p>
+        <h2 className="text-xl font-serif font-semibold text-gray-500">
+          {group.creator.name}
+        </h2>
+      </Box>
+    </Grid>
   );
 };
 

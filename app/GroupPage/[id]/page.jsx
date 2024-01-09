@@ -1,5 +1,5 @@
 import GroupCard from "@/app/GroupCard";
-import { Button, Card, Flex } from "@radix-ui/themes";
+import { Box, Button, Card, Flex, Grid } from "@radix-ui/themes";
 import React from "react";
 // import GotoCreateExpensesPage from "./GotoCreateExpensesPage";
 import Link from "next/link";
@@ -51,13 +51,8 @@ const GroupDetailsPage = async ({ params: { id } }) => {
     const monthString = date.toLocaleString("default", {
       month: "long",
     });
-    // const month = date.getMonth();
 
-    // console.log(Date);
     return (
-      // <div className="border rounded-md w-5/12 text-sm border-purple-300 p-2 pr-6">
-      //   {formattedDate}
-      // </div>
       <div className="flex flex-col rounded-md p-2 w-14">
         <h1 className="text-base text-gray-500">
           {monthString.substring(0, 3)}
@@ -75,16 +70,18 @@ const GroupDetailsPage = async ({ params: { id } }) => {
 
   return (
     <>
-      <Card mb="3" className="min-h-full pl-10">
-        <div className="flex justify-around">
-          <GroupCard group={GroupData} />
-          <div>
+      <Card mb="3" className="min-h-full">
+        <Grid columns={{ initial: "1", sm: "5" }}>
+          <Box className="col-span-4">
+            <GroupCard group={GroupData} />
+          </Box>
+          <Box>
             <h1>Members Involved</h1>
             {GroupData?.members?.map((user) => (
               <h2 key={user.id}>{user.name}</h2>
             ))}
-          </div>
-        </div>
+          </Box>
+        </Grid>
       </Card>
       <Link
         href={`/GroupPage/${id}/CreateExpensePage`}
@@ -130,15 +127,15 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                       <p>{`Rs - ${expense.amount}/-`}</p>
                     </div> */}
                   </AccordionTrigger>
-                  <AccordionContent className="mx-5">
+                  <AccordionContent className="mx-5 my-5">
                     <h1 className="mb-2">
                       {capitalizeFirstLetter(expense.description)}
                     </h1>
                     <div className="flex gap-2 items-center w-8/12">
-                      <GetDate_Month
-                        date={expense.date}
-                        className="border-purple-200 rounded-md"
-                      />
+                      <div className="text-base font-serif font-semibold">
+                        {" "}
+                        {expense.date.toLocaleString()}
+                      </div>
                     </div>
                     <div className="mt-5">
                       <div className="flex flex-col">
