@@ -12,14 +12,14 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
+import DeleteExpenseButton from './DeleteExpense';
+
 // import { capitalizeFirstLetter } from "../../components/CapitalizeFirstLetter";
 import { capitalizeFirstLetter } from '@/app/components/capitalizeFirstLetter';
 // import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
 
 import { Home, CarTaxiFront as Tour, Album as Other } from 'lucide-react';
 // import { Box, Flex, Grid } from "@radix-ui/themes";
-
-// import UserData from "@/lib/useGetdata";
 
 const GroupDetailsPage = async ({ params: { id } }) => {
   const GroupData = await prisma.group.findUnique({
@@ -121,25 +121,30 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                   className="border-b-2 border-purple-200"
                 >
                   <AccordionTrigger className="hover:no-underline bg-purple-100 rounded-md shadow-md pr-4 ">
-                    <div className="flex gap-4 items-center w-8/12">
-                      <GetDate_Month date={expense.date} />
-                      <div className="flex flex-col justify-start items-start">
-                        <h3 className="text-xl font-serif font-medium text-gray-700">
-                          {capitalizeFirstLetter(expense.description)}
-                        </h3>
-                        <h2 className="text-gray-600 text-sm font-sans font-medium">
-                          <span>
-                            {expense?.PaidBy.name} paid{' '}
-                            <IndianRupee
-                              className="inline-block"
-                              size="20"
-                            />
-                            <span className="text-xl font-semibold">
-                              {' '}
-                              {expense.amount}
+                    <div className="flex flex-row justify-between items-center w-full ">
+                      <div className="flex gap-4 items-center w-10/12">
+                        <GetDate_Month date={expense.date} />
+                        <div className="flex flex-col justify-start items-start">
+                          <h3 className="text-xl font-serif font-medium text-gray-700">
+                            {capitalizeFirstLetter(expense.description)}
+                          </h3>
+                          <h2 className="text-gray-600 text-sm font-sans font-medium">
+                            <span>
+                              {expense?.PaidBy.name} paid{' '}
+                              <IndianRupee
+                                className="inline-block"
+                                size="20"
+                              />
+                              <span className="text-xl font-semibold">
+                                {' '}
+                                {expense.amount}
+                              </span>
                             </span>
-                          </span>
-                        </h2>
+                          </h2>
+                        </div>
+                      </div>
+                      <div className="mr-3">
+                        <DeleteExpenseButton expenseId={expense.id} />
                       </div>
                     </div>
 

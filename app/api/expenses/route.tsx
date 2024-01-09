@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   const expenses = await prisma?.expense.findMany({
     include: {
       splits: true,
-      //   creator: true,
+      
     },
   });
   return NextResponse.json(expenses);

@@ -9,6 +9,7 @@ import Link from 'next/link';
 
 export default async function Home() {
   const groups = await prisma.group.findMany({
+    // where: {},
     include: {
       members: true,
       creator: true,

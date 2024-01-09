@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 import AsideBar from './AsideBar';
 import { cn } from '../lib/utils';
 import AuthProvider from './auth/Provider';
+import StoreProvider from './StoreProvider';
 
 // const inter = Inter({ subsets: ["latin"] });
 export const fontSans = FontSans({

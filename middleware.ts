@@ -1,7 +1,7 @@
-import middleware from "next-auth/middleware";
+import middleware from 'next-auth/middleware';
 
 export default middleware;
 
 export const config = {
-  matcher: ["/GroupPage/:id*"],
+  matcher: ['/GroupPage/:id*', '/'],
 };
