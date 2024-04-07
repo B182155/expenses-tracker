@@ -208,7 +208,7 @@ const CreateGroup = () => {
             />
 
             {friends.length ? (
-              <div className="w-full lg:w-7/12">
+              <div className="w-full lg:w-7/12 ">
                 {friends.map((friend) => (
                   <FriendComponent
                     key={friend.id}
@@ -347,7 +347,7 @@ const FriendComponent = ({ name, onDelete }) => {
   // console.log(name, onDelete);
   return (
     <div
-      className={`flex justify-between items-center rounded-lg p-2 text-sm font-medium text-gray-700 border-b-2 " 
+      className={`flex justify-between items-center rounded-lg p-2 text-sm font-medium text-gray-700 dark:text-slate-300 border-b-2 " 
     }`}
     >
       <h3 className="text-sm font-serif font-medium">{name}</h3>

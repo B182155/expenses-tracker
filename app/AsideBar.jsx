@@ -36,11 +36,13 @@ const NavLinks = async () => {
             <Link
               href={item.link}
               className={classnames({
-                "text-gray-600 hover:text-gray-900 transition-colors dark:text-slate-300": true,
+                "text-gray-600 hover:text-gray-900 transition-colors ": true,
                 "active:text-gray-900": true,
               })}
             >
-              <h3 className="font-serif font-medium text-lg">{item.name}</h3>
+              <h3 className="font-serif font-medium text-lg dark:text-white ">
+                {item.name}
+              </h3>
             </Link>
           </Box>
         ))}
@@ -60,7 +62,7 @@ const NavLinks = async () => {
             return (
               <Link key={group.id} mb="3" href={`/GroupPage/${group.id}`}>
                 <Card size="1">
-                  <h3 className="font-serif font-medium text-base">
+                  <h3 className="font-serif font-medium text-base dark:text-slate-300">
                     {capitalizeFirstLetter(group.title)}
                   </h3>
                 </Card>
