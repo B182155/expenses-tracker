@@ -6,14 +6,13 @@ import classnames from "classnames";
 import { MdGroupAdd } from "react-icons/md";
 import prisma from "@/prisma/prismaClient";
 import GroupCard from "./GroupCard";
-// import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
-import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "./components/CapitalizeFirstLetter";
 
 const NavLinks = async () => {
   // const currentpath = usePathname();
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  // function capitalizeFirstLetter(string) {
+  //   return string.charAt(0).toUpperCase() + string.slice(1);
+  // }
 
   const navItems = [
     {
