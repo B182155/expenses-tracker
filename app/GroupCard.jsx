@@ -1,8 +1,8 @@
-import React from 'react';
-import { capitalizeFirstLetter } from '@/app/components/capitalizeFirstLetter';
+import React from "react";
+import { capitalizeFirstLetter } from "@/app/components/capitalizeFirstLetter";
 
-import { Home, CarTaxiFront as Tour, Album as Other } from 'lucide-react';
-import { Box, Flex, Grid } from '@radix-ui/themes';
+import { Home, CarTaxiFront as Tour, Album as Other } from "lucide-react";
+import { Box, Flex, Grid } from "@radix-ui/themes";
 
 const GroupCard = ({ group }) => {
   const iconName = group.type;
@@ -13,9 +13,9 @@ const GroupCard = ({ group }) => {
 
   const renderIcon = (iconName) => {
     switch (iconName) {
-      case 'Home':
+      case "Home":
         return <Home color="purple" />;
-      case 'Tour':
+      case "Tour":
         return <Tour color="purple" />;
       // Add more cases for other icons if needed
       default:
@@ -25,15 +25,15 @@ const GroupCard = ({ group }) => {
   return (
     <Grid
       align="center"
-      gapX={{ initial: '2', sm: '5' }}
+      gapX={{ initial: "2", sm: "5" }}
       gapY="2"
-      columns={{ initial: '3', sm: '7' }}
+      columns={{ initial: "3", sm: "7" }}
       shrink="1"
-      rows={{ initial: '2', sm: '0' }}
+      rows={{ initial: "2", sm: "0" }}
     >
       <Box className="ml-5 md:ml-10 scale-150 ">{renderIcon(iconName)}</Box>
       <Box className="col-span-2">
-        <h3 className="text-xl font-serif font-semibold text-gray-500">
+        <h3 className="text-xl font-serif font-semibold text-gray-500 dark:text-white">
           {capitalizeFirstLetter(group.title)}
         </h3>
 
@@ -42,10 +42,10 @@ const GroupCard = ({ group }) => {
         </h2>
       </Box>
       <Box className="col-span-2 ml-3">
-        <p className="text-base font-serif font-medium text-gray-500">
+        <p className="text-base font-serif font-medium dark:text-slate-300">
           Created By
         </p>
-        <h2 className="text-xl font-serif font-semibold text-gray-500">
+        <h2 className="text-xl font-serif font-semibold dark:text-slate-300 ">
           {group.creator.name}
         </h2>
       </Box>

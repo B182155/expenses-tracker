@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { Check, ChevronsUpDown } from 'lucide-react';
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from '../../lib/utils';
+import { cn } from "../../lib/utils";
 
 import {
   //   Card as card,
   CardContent,
   CardHeader,
   CardTitle,
-} from '../../components/ui/card';
-import { Button, Callout, Card } from '@radix-ui/themes';
+} from "../../components/ui/card";
+import { Button, Callout, Card } from "@radix-ui/themes";
 
 import {
   Command,
@@ -22,12 +22,12 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '../../components/ui/command';
+} from "../../components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../../components/ui/popover';
+} from "../../components/ui/popover";
 
 import {
   Select,
@@ -35,7 +35,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../../components/ui/select';
+} from "../../components/ui/select";
 
 import {
   Form,
@@ -44,22 +44,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../components/ui/form';
-import { Input } from '../../components/ui/input';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+} from "../../components/ui/form";
+import { Input } from "../../components/ui/input";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 // import FriendComponent from "./FriendComponent";
-import prisma from '@/prisma/prismaClient';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
-import Spinner from '@/app/components/Spinner';
-import { InfoCircledIcon } from '@radix-ui/react-icons';
+import prisma from "@/prisma/prismaClient";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import Spinner from "@/app/components/Spinner";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 // import useGetdata from "@/lib/useGetdata";
 
 const formSchema = z.object({
   title: z.string().min(5, {
-    message: 'Title must be at least 5 characters.',
+    message: "Title must be at least 5 characters.",
   }),
   type: z.string(),
 });
@@ -75,37 +75,37 @@ const CreateGroup = () => {
 
   const [isSubmitting, setisSubmitting] = useState(false);
   // const [iserror, setisError] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // const user = useGetdata();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
-      type: '',
+      title: "",
+      type: "",
     },
   });
 
   const types = [
     {
-      value: 'Home',
-      label: 'Home',
+      value: "Home",
+      label: "Home",
     },
     {
-      value: 'Tour',
-      label: 'Tour',
+      value: "Tour",
+      label: "Tour",
     },
 
     {
-      value: 'Other',
-      label: 'Other',
+      value: "Other",
+      label: "Other",
     },
   ];
 
   const getUsers = async () => {
     try {
-      const data = await fetch(`/api/users`, { cache: 'no-store' });
+      const data = await fetch(`/api/users`, { cache: "no-store" });
       const users = await data.json();
       setUsers(users);
 
@@ -150,11 +150,11 @@ const CreateGroup = () => {
 
       const data = { ...values, memberIds, createdBy };
 
-      await axios.post('api/groups', data);
+      await axios.post("api/groups", data);
       // Do something with the form values.
       // ✅ This will be type-safe and validated.
 
-      router.push('/');
+      router.push("/");
       router.refresh();
 
       // console.log(data);
@@ -171,15 +171,9 @@ const CreateGroup = () => {
   };
 
   return (
-    <Card
-      className="w-full lg:w-9/12 mx-auto"
-      my="2"
-    >
+    <Card className="w-full lg:w-9/12 mx-auto" my="2">
       {error && (
-        <Callout.Root
-          color="red"
-          className="mb-2"
-        >
+        <Callout.Root color="red" className="mb-2">
           <Callout.Icon>
             <InfoCircledIcon />
           </Callout.Icon>
@@ -188,30 +182,24 @@ const CreateGroup = () => {
       )}
       {/* <h1>{Session?.user.name}</h1> */}
       <CardHeader>
-        <CardTitle className="text-gray-600 font-serif ">
+        <CardTitle className="text-gray-600 font-serif dark:text-slate-300 ">
           Create A New Group
         </CardTitle>
         {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="space-y-8"
-          >
+          <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-600 font-serif font-semibold text-base">
+                  <FormLabel className="text-gray-600 font-serif font-semibold text-base  dark:text-slate-300">
                     Group Title
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Title of the group..."
-                      {...field}
-                    />
+                    <Input placeholder="Title of the group..." {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -236,7 +224,7 @@ const CreateGroup = () => {
               name="friend"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel className="text-gray-600 font-serif font-semibold text-base">
+                  <FormLabel className="text-gray-600 font-serif font-semibold text-base  dark:text-slate-300 ">
                     Add Friends
                   </FormLabel>
                   <Popover>
@@ -246,17 +234,17 @@ const CreateGroup = () => {
                           variant="outline"
                           role="combobox"
                           className={cn(
-                            'w-full lg:w-7/12',
-                            !field.value && 'text-muted-foreground'
+                            "w-full lg:w-7/12",
+                            !field.value && "text-muted-foreground "
                           )}
                         >
-                          <div className="w-full flex justify-between">
-                            <p className="text-gray-600 font-serif font-medium text-sm">
+                          <div className="w-full flex justify-between ">
+                            <p className="text-gray-600 font-serif font-medium text-md  dark:text-slate-300">
                               {field.value
                                 ? users.find(
                                     (user) => user.email === field.value
                                   )?.name
-                                : 'Select Users...'}
+                                : "Select Users..."}
                             </p>
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </div>
@@ -273,6 +261,7 @@ const CreateGroup = () => {
                             else
                               return (
                                 <CommandItem
+                                  className="text-sm dark:text-slate-400"
                                   value={user.email}
                                   key={user.id}
                                   onSelect={() => {
@@ -289,10 +278,10 @@ const CreateGroup = () => {
                                 >
                                   <Check
                                     className={cn(
-                                      'mr-2 h-4 w-4',
+                                      "mr-2 h-4 w-4",
                                       user.email === field.value
-                                        ? 'opacity-100'
-                                        : 'opacity-0'
+                                        ? "opacity-100"
+                                        : "opacity-0"
                                     )}
                                   />
                                   {user.email}
@@ -312,26 +301,20 @@ const CreateGroup = () => {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-600 font-serif font-semibold text-base">
+                  <FormLabel className="text-gray-600 font-serif font-semibold text-base  dark:text-slate-300">
                     Group Type
                   </FormLabel>
                   <FormControl>
                     <div className="w-full lg:w-7/12">
-                      <Select
-                        {...field}
-                        onValueChange={field.onChange}
-                      >
+                      <Select {...field} onValueChange={field.onChange}>
                         <SelectTrigger id="type">
                           <SelectValue placeholder="Type" />
                         </SelectTrigger>
                         <SelectContent position="popper">
                           {types.map((type) => {
                             return (
-                              <SelectItem
-                                value={type.value}
-                                key={type.value}
-                              >
-                                <h2 className="text-gray-600 font-serif font-medium text-base">
+                              <SelectItem value={type.value} key={type.value}>
+                                <h2 className="text-gray-600 font-serif font-medium text-base dark:text-slate-300">
                                   {type.label}
                                 </h2>
                               </SelectItem>
@@ -349,7 +332,7 @@ const CreateGroup = () => {
               onClick={form.handleSubmit(onSubmit)}
               className="w-7/12"
             >
-              {isSubmitting ? `Saving...  ` : 'Save'}
+              {isSubmitting ? `Saving...  ` : "Save"}
 
               {isSubmitting && <Spinner />}
             </Button>
@@ -381,6 +364,6 @@ const FriendComponent = ({ name, onDelete }) => {
   );
 };
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default CreateGroup;
