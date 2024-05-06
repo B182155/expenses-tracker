@@ -2,6 +2,8 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
+import UserStore from "./Stores/UserStore";
+
 import { FcMoneyTransfer } from "react-icons/fc";
 
 import { Box, Flex } from "@radix-ui/themes";
@@ -70,6 +72,8 @@ const Navbar = () => {
 const AuthStatus = () => {
   const { status, data: session } = useSession();
 
+  // const { login, logout } = UserStore();
+
   // console.log(session);
 
   if (status === "loading") {
@@ -77,7 +81,12 @@ const AuthStatus = () => {
   }
 
   if (status === "unauthenticated") {
-    return <Link href="api/auth/signin">Login</Link>;
+    // logout();
+    return (
+      <>
+        <Link href="api/auth/signin">Login</Link>
+      </>
+    );
   }
 
   return (
@@ -88,6 +97,7 @@ const AuthStatus = () => {
             <Avatar.Root>
               <Avatar.AvatarImage
                 src={session.user?.image}
+                // src={userData?.image}
                 className="h-8 w-8 rounded-full"
               />
               <Avatar.AvatarFallback delayMs={200}>?</Avatar.AvatarFallback>
@@ -99,7 +109,7 @@ const AuthStatus = () => {
               sideOffset={5}
             >
               <DropdownMenu.Label className="pl-[25px] text-sm leading-[25px] text-mauve11">
-                {session.user?.name}
+                {session?.user?.name}
               </DropdownMenu.Label>
 
               <DropdownMenu.Item className="group text-[15px] leading-none text-violet11 rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1">
@@ -110,6 +120,8 @@ const AuthStatus = () => {
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
       )}
+
+      {/* {login(session.user)} */}
     </Box>
   );
 };

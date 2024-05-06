@@ -4,8 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Check, ChevronsUpDown } from "lucide-react";
-
 // import { cn } from "../../lib/utils";
 import { cn } from "@/lib/utils";
 
@@ -42,22 +40,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { notFound, useRouter } from "next/navigation";
 // import FriendComponent from "./FriendComponent";
-import prisma from "@/prisma/prismaClient";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
 import { IndianRupee } from "lucide-react";
 
-import { format, parseISO } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
 import Spinner from "@/app/components/Spinner";
+
+import { useQuery } from "@tanstack/react-query";
 
 const CreateExpensePage = ({ params }) => {
   // console.log(params);
@@ -71,14 +70,13 @@ const CreateExpensePage = ({ params }) => {
 
   const getfriends = async () => {
     try {
-      const data = await fetch(`/api/groups/${params.id}`, {
-        cache: "no-store",
-      });
+      const data = await fetch(`/api/groups/${params.id}`);
       const friendsData = await data.json();
       const { members } = friendsData;
-      // console.log(members);
+      // return members;
       setFriends(members);
     } catch (error) {
+      // return error;
       console.error(error.message);
     }
   };
@@ -88,6 +86,11 @@ const CreateExpensePage = ({ params }) => {
   useEffect(() => {
     getfriends();
   }, []);
+
+  // const { data: friends, error: Error } = useQuery({
+  //   queryKey: ["users", params.id],
+  //   queryFn: getfriends,
+  // });
 
   const getUserData = async ({ session }) => {
     try {
@@ -104,9 +107,9 @@ const CreateExpensePage = ({ params }) => {
     getUserData({ session });
   }, [session]);
 
-  const handleDeleteFriend = (friendName) => {
-    setFriends((prev) => prev.filter((friend) => friend.name !== friendName));
-  };
+  // const handleDeleteFriend = (friendName) => {
+  //   setFriends((prev) => prev.filter((friend) => friend.name !== friendName));
+  // };
 
   const formSchema = z.object({
     description: z
@@ -142,7 +145,7 @@ const CreateExpensePage = ({ params }) => {
       // date: z.optional(z.date()).default(Date()),
       // date: z.date().optional().default(new Date().toISOString()),
       friends: friends?.map((friend) => friend.id),
-      // friends: ["recents", "home"],
+      // friends: ["Girigela Shiva", "home"],
     },
   });
 
@@ -153,14 +156,15 @@ const CreateExpensePage = ({ params }) => {
       setisSubmitting(true);
 
       const { description, date, payerId, friends } = values;
+
+      console.log(friends);
       const amount = parseInt(values.amount);
       const groupId = params.id;
 
       const data = { description, amount, date, payerId, groupId, friends };
 
       await axios.post("/api/expenses", data);
-      // // Do something with the form values.
-      // // ✅ This will be type-safe and validated.
+
       router.push(`/GroupPage/${params.id}`);
       router.refresh();
 
@@ -173,39 +177,34 @@ const CreateExpensePage = ({ params }) => {
     }
   }
 
-  const items = [
-    {
-      id: "recents",
-      label: "Recents",
-    },
-    {
-      id: "home",
-      label: "Home",
-    },
-    {
-      id: "applications",
-      label: "Applications",
-    },
-    {
-      id: "desktop",
-      label: "Desktop",
-    },
-    {
-      id: "downloads",
-      label: "Downloads",
-    },
-    {
-      id: "documents",
-      label: "Documents",
-    },
-  ];
+  // const items = [
+  //   {
+  //     id: "recents",
+  //     label: "Recents",
+  //   },
+  //   {
+  //     id: "home",
+  //     label: "Home",
+  //   },
+  //   {
+  //     id: "applications",
+  //     label: "Applications",
+  //   },
+  //   {
+  //     id: "desktop",
+  //     label: "Desktop",
+  //   },
+  //   {
+  //     id: "downloads",
+  //     label: "Downloads",
+  //   },
+  //   {
+  //     id: "documents",
+  //     label: "Documents",
+  //   },
+  // ];
 
   const date = new Date();
-  // const formattedDate = date.toLocaleDateString("en-US", {
-  //   month: "long",
-  //   day: "numeric",
-  //   year: "numeric",
-  // });
 
   return (
     <Card className="w-full lg:w-9/12 mx-auto" my="2">
@@ -287,7 +286,7 @@ const CreateExpensePage = ({ params }) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {friends.map((friend) => {
+                          {friends?.map((friend) => {
                             return (
                               <SelectItem value={friend.id} key={friend.id}>
                                 {friend.name}
@@ -364,11 +363,8 @@ const CreateExpensePage = ({ params }) => {
                         <FormLabel className="text-gray-600 font-serif font-semibold text-base dark:text-white">
                           Select Members
                         </FormLabel>
-                        {/* <FormDescription>
-                          Select the items you want to display in the sidebar.
-                        </FormDescription> */}
                       </div>
-                      {friends.map((friend) => (
+                      {friends?.map((friend) => (
                         <FormField
                           key={friend.id}
                           control={form.control}
@@ -404,7 +400,6 @@ const CreateExpensePage = ({ params }) => {
                           }}
                         />
                       ))}
-                      <FormMessage />
                     </FormItem>
                   )}
                 />

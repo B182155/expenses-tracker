@@ -1,8 +1,8 @@
-import authOptions from '@/app/auth/authOptions';
-import { getServerSession } from 'next-auth';
-import { NextResponse, NextRequest } from 'next/server';
-import prisma from '@/prisma/prismaClient';
-import { Expense } from '@prisma/client';
+import authOptions from "@/app/auth/authOptions";
+import { getServerSession } from "next-auth";
+import { NextResponse, NextRequest } from "next/server";
+import prisma from "@/prisma/prismaClient";
+import { Expense } from "@prisma/client";
 // import { string } from "zod";
 
 export async function GET(request: NextRequest) {
@@ -14,7 +14,6 @@ export async function GET(request: NextRequest) {
   const expenses = await prisma?.expense.findMany({
     include: {
       splits: true,
-      
     },
   });
   return NextResponse.json(expenses);

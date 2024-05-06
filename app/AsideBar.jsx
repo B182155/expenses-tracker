@@ -8,6 +8,9 @@ import prisma from "@/prisma/prismaClient";
 import GroupCard from "./GroupCard";
 import { capitalizeFirstLetter } from "./components/CapitalizeFirstLetter";
 
+import { getServerSession } from "next-auth";
+import authOptions from "@/app/auth/authOptions";
+
 const NavLinks = async () => {
   // const currentpath = usePathname();
   // function capitalizeFirstLetter(string) {
@@ -21,12 +24,36 @@ const NavLinks = async () => {
     },
   ];
 
+  const Session = await getServerSession(authOptions);
+
+  const userData = Session.user;
+
+  const user = await prisma?.user.findUnique({
+    where: {
+      email: userData.email,
+    },
+  });
+
   const groups = await prisma.group.findMany({
+    where: {
+      OR: [
+        { createdBy: user.id },
+        {
+          members: {
+            some: {
+              id: user?.id,
+            },
+          },
+        },
+      ],
+    },
     include: {
       members: true,
       creator: true,
     },
   });
+
+  // console.log(groups);
   return (
     <Flex gap="4" direction="column">
       <Card className="w-full">

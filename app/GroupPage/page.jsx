@@ -8,13 +8,13 @@ import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 
+import { Button, Callout, Card } from "@radix-ui/themes";
 import {
   //   Card as card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { Button, Callout, Card } from "@radix-ui/themes";
 
 import {
   Command,
@@ -37,6 +37,8 @@ import {
   SelectValue,
 } from "../../components/ui/select";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   Form,
   FormControl,
@@ -46,14 +48,13 @@ import {
   FormMessage,
 } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 // import FriendComponent from "./FriendComponent";
-import prisma from "@/prisma/prismaClient";
-import axios from "axios";
-import { useSession } from "next-auth/react";
 import Spinner from "@/app/components/Spinner";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+
+import UserStore from "../Stores/UserStore";
 
 // import useGetdata from "@/lib/useGetdata";
 
@@ -115,11 +116,15 @@ const CreateGroup = () => {
     }
   };
 
+  const setUser = UserStore((s) => s.setUser);
+
   const getUserData = async ({ Session }) => {
     try {
       const data = await fetch(`/api/users/${Session?.user.email}`);
       const userData = await data.json();
       // friends?.push(userData);
+
+      setUser(userData);
 
       setUserData(userData);
     } catch (error) {
@@ -134,13 +139,6 @@ const CreateGroup = () => {
     getUserData({ Session });
   }, [Session]);
 
-  // useEffect(() => {
-  //   if (userData) {
-  //     setFriends([{ id: userData?.id, name: userData?.name }]);
-  //   }
-  // }, []);
-
-  // 2. Define a submit handler.
   async function onSubmit(values) {
     try {
       setisSubmitting(true);
@@ -151,8 +149,6 @@ const CreateGroup = () => {
       const data = { ...values, memberIds, createdBy };
 
       await axios.post("api/groups", data);
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
 
       router.push("/");
       router.refresh();

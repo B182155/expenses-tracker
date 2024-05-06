@@ -1,6 +1,7 @@
 import "@radix-ui/themes/styles.css";
 
-// import { Inter } from "next/font/google";
+import TanStackProvider from "./components/TanStackProvider";
+
 import { Card, Container, Theme } from "@radix-ui/themes";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "../lib/utils";
@@ -32,14 +33,13 @@ export default function RootLayout({ children }) {
           fontSans.variable
         )}
       >
-        {/*<NextThemeProvider> */}
-
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <TanStackProvider>
           <AuthProvider>
             <Theme
               appearance="light"
@@ -76,9 +76,8 @@ export default function RootLayout({ children }) {
               {/* <ThemePanel /> */}
             </Theme>
           </AuthProvider>
+          </TanStackProvider>
         </ThemeProvider>
-
-        {/* </NextThemeProvider> */}
       </body>
     </html>
   );
