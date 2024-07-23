@@ -60,7 +60,7 @@ const Navbar = () => {
           </Link>
         </Flex>
         <Flex align="center" gap="4">
-          <ModeToggle />
+          {/* <ModeToggle /> */}
           <AuthStatus />
         </Flex>
       </Flex>

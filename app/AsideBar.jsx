@@ -66,9 +66,9 @@ const NavLinks = async () => {
                 "active:text-gray-900": true,
               })}
             >
-              <h3 className="font-serif font-medium text-lg dark:text-white ">
+              <p className="font-serif font-medium text-lg dark:text-white ">
                 {item.name}
-              </h3>
+              </p>
             </Link>
           </Box>
         ))}
@@ -77,7 +77,7 @@ const NavLinks = async () => {
       <Card className="w-full min-h-screen ">
         <Flex direction="row" justify="between" align="center">
           <Heading color="purple" size="5">
-            <h3 className="font-serif font-extrabold text-xl">GROUPS</h3>
+            <p className="font-serif font-extrabold text-xl">GROUPS</p>
           </Heading>
           <Link href="/GroupPage">
             <MdGroupAdd className="w-9 h-9 p-1 rounded-md  invert-0" />
@@ -88,9 +88,9 @@ const NavLinks = async () => {
             return (
               <Link key={group.id} mb="3" href={`/GroupPage/${group.id}`}>
                 <Card size="1">
-                  <h3 className="font-serif font-medium text-base dark:text-slate-300">
+                  <p className="font-serif font-medium text-base dark:text-slate-300">
                     {capitalizeFirstLetter(group.title)}
-                  </h3>
+                  </p>
                 </Card>
               </Link>
             );

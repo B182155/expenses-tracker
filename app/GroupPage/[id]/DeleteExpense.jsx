@@ -1,11 +1,11 @@
-'use client';
-import Spinner from '@/app/components/Spinner';
-import { Button, Dialog, Flex } from '@radix-ui/themes';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+"use client";
+import Spinner from "@/app/components/Spinner";
+import { Button, Dialog, Flex } from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { MdOutlineDeleteForever } from 'react-icons/md';
+import { MdOutlineDeleteForever } from "react-icons/md";
 
 const DeleteExpenseButton = ({ expenseId }) => {
   const router = useRouter();
@@ -16,7 +16,7 @@ const DeleteExpenseButton = ({ expenseId }) => {
     try {
       // console.log(`Delete Issue ${expenseId}`);
       setDeleting(true);
-      await axios.delete('/api/expenses/' + expenseId);
+      await axios.delete("/api/expenses/" + expenseId);
       // alert(expenseId + ' deleted');
       //   router.push('/issues');
       router.refresh();
@@ -32,34 +32,21 @@ const DeleteExpenseButton = ({ expenseId }) => {
     <>
       <Dialog.Root>
         <Dialog.Trigger>
-          <Button
-            color="red"
-            disabled={isDeleting}
-          >
+          <div color="red" disabled={isDeleting}>
             <MdOutlineDeleteForever className="h-5 w-5" />
             {isDeleting && <Spinner />}
-          </Button>
+          </div>
         </Dialog.Trigger>
 
         <Dialog.Content style={{ maxWidth: 450 }}>
           <Dialog.Title>Delete Expense</Dialog.Title>
-          <Dialog.Description
-            size="2"
-            mb="4"
-          >
+          <Dialog.Description size="2" mb="4">
             Are you sure you want to delete this Expense?
           </Dialog.Description>
 
-          <Flex
-            gap="3"
-            mt="4"
-            justify="start"
-          >
+          <Flex gap="3" mt="4" justify="start">
             <Dialog.Close>
-              <Button
-                variant="soft"
-                color="gray"
-              >
+              <Button variant="soft" color="gray">
                 Cancel
               </Button>
             </Dialog.Close>

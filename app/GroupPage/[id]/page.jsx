@@ -143,13 +143,6 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                           <DeleteExpenseButton expenseId={expense.id} />
                         </div>
                       </div>
-
-                      {/* <div className={`flex flex-col`}>
-                    
-
-                      <h1>{`${expense?.PaidBy.name} paid`}</h1>
-                      <p>{`Rs - ${expense.amount}/-`}</p>
-                    </div> */}
                     </AccordionTrigger>
                     <AccordionContent className="mx-5 my-5">
                       <h1 className="mb-2 text-gray-700 font-serif font-semibold text-base dark:text-slate-300">
