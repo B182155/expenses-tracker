@@ -3,6 +3,7 @@ import { Box, Button, Card, Flex, Grid } from "@radix-ui/themes";
 import React from "react";
 // import GotoCreateExpensesPage from "./GotoCreateExpensesPage";
 import Link from "next/link";
+import prisma from "@/prisma/prismaClient";
 
 import { IndianRupee, User } from "lucide-react";
 import {
@@ -20,7 +21,7 @@ import { Home, CarTaxiFront as Tour, Album as Other } from "lucide-react";
 // import { Box, Flex, Grid } from "@radix-ui/themes";
 
 const GroupDetailsPage = async ({ params: { id } }) => {
-  const GroupData = await prisma.group.findUnique({
+  const GroupData = await prisma?.group.findUnique({
     where: {
       id,
     },
@@ -30,7 +31,7 @@ const GroupDetailsPage = async ({ params: { id } }) => {
     },
   });
 
-  const expenses = await prisma.expense.findMany({
+  const expenses = await prisma?.expense.findMany({
     where: {
       groupId: id,
     },
