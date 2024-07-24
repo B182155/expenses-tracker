@@ -20,7 +20,7 @@ The Personal Expense Tracker is a user-friendly web application designed to help
 Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/expense-tracker.git
+git clone https://github.com/B182155/expenses-tracker.git
 cd expense-tracker
 ```
 Install Dependencies
