@@ -134,7 +134,7 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                     key={expense.id}
                     className="border-b-2 border-purple-200"
                   >
-                    <AccordionTrigger className="hover:no-underline bg-purple-100 rounded-md shadow-md pr-4 ">
+                    <AccordionTrigger className="hover:no-underline bg-purple-100 rounded-md shadow-md pr-4">
                       <div className="flex flex-row justify-between items-center w-full ">
                         <div className="flex gap-1 md:gap-3 items-center w-full">
                           <GetDate_Month date={expense.date} />
