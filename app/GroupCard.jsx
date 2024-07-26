@@ -26,27 +26,29 @@ const GroupCard = ({ group }) => {
   return (
     <Grid
       align="center"
-      gapX={{ initial: "2", sm: "5" }}
-      gapY="2"
-      columns={{ initial: "3", sm: "7" }}
-      shrink="1"
-      rows={{ initial: "2", sm: "0" }}
+      // direction={{ initial: "column", sm: "row" }}
+      columns={{ initial: "1", sm: "2" }}
+      gap={{ initial: "2", sm: "3" }}
     >
-      <Box className="ml-5 md:ml-10 scale-150 ">{renderIcon(iconName)}</Box>
-      <Box className="col-span-2">
-        <h3 className="text-xl font-serif font-semibold text-gray-500 dark:text-white">
-          {capitalizeFirstLetter(group.title)}
-        </h3>
-
-        <h2 className="text-sm font-serif font-semibold text-purple-400">
-          {group.createdAt.toDateString()}
-        </h2>
+      <Box columns={{}}>
+        <Flex align="center" gap={{ initial: "3", sm: "4" }}>
+          <Box className="md:ml-5 mr-4 scale-150 ">{renderIcon(iconName)}</Box>
+          <Box className="">
+            <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-serif font-semibold text-gray-500 dark:text-white">
+              {capitalizeFirstLetter(group.title)}
+            </h3>
+            <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-serif font-semibold text-purple-400">
+              {group.createdAt.toDateString()}
+            </h2>
+          </Box>
+        </Flex>
       </Box>
-      <Box className="col-span-2 ml-3">
-        <p className="text-base font-serif font-medium dark:text-slate-300">
+
+      <Box className="">
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl font-serif font-medium dark:text-slate-300">
           Created By
         </p>
-        <h2 className="text-xl font-serif font-semibold dark:text-slate-300 ">
+        <h2 className="text-base sm:text-lg md:text-xl font-sans font-light dark:text-slate-300 ">
           {group.creator.name}
         </h2>
       </Box>

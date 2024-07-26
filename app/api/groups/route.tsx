@@ -33,5 +33,21 @@ export async function POST(request: NextRequest) {
     },
   });
 
+  const groupId = group.id;
+
+  memberIds.forEach(async (memberId) => {
+    await prisma?.user.update({
+      where: { id: memberId },
+      data: {
+        groups: {
+          connect: { id: groupId },
+        },
+        GroupIds: {
+          push: groupId,
+        },
+      },
+    });
+  });
+
   return NextResponse.json(group, { status: 201 });
 }

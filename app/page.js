@@ -25,7 +25,16 @@ export default async function Home() {
 
   const groups = await prisma.group.findMany({
     where: {
-      createdBy: user.id,
+      OR: [
+        { createdBy: user.id },
+        {
+          members: {
+            some: {
+              id: user?.id,
+            },
+          },
+        },
+      ],
     },
     include: {
       members: true,
@@ -33,7 +42,7 @@ export default async function Home() {
     },
   });
 
-  console.log(groups);
+  // console.log(groups);
 
   return (
     <Flex direction="column-reverse" gap="0" mt="2">

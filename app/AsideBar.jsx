@@ -53,6 +53,38 @@ const NavLinks = async () => {
     },
   });
 
+  // const groupsCreatedByUser = await prisma.group.findMany({
+  //   where: {
+  //     createdBy: user.id,
+  //   },
+  //   include: {
+  //     members: true,
+  //     creator: true,
+  //   },
+  // });
+
+  // const groupsWithUserAsMember = await prisma.group.findMany({
+  //   where: {
+  //     members: {
+  //       some: {
+  //         id: user.id,
+  //       },
+  //     },
+  //   },
+  //   include: {
+  //     members: true,
+  //     creator: true,
+  //   },
+  // });
+
+  // // Merge the results, removing duplicates if necessary
+  // const groupsMap = new Map();
+  // [...groupsCreatedByUser, ...groupsWithUserAsMember].forEach((group) => {
+  //   groupsMap.set(group.id, group);
+  // });
+
+  // const groups = Array.from(groupsMap.values());
+
   // console.log(groups);
   return (
     <Flex gap="4" direction="column">

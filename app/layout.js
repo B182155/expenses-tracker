@@ -40,42 +40,42 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <TanStackProvider>
-          <AuthProvider>
-            <Theme
-              appearance="light"
-              panelBackground="translucent"
-              accentColor="purple"
-            >
-              <Container className="mx-auto w-9/12">
-                <Card
-                  mb="3"
-                  mt="3"
-                  className="p-2"
-                  variant="classic"
-                  style={{ backgroundColor: "var(--background-color)" }}
-                >
-                  {/* <nav className=""> */}
-                  <Navbar />
-                  {/* </nav> */}
-                </Card>
-                <div className="grid grid-flow-row grid-cols-12 gap-2 ">
-                  <aside className="hidden lg:block text-sm lg:col-span-3  ">
-                    <AsideBar />
-                  </aside>
-                  <main className="col-span-12 text-sm lg:col-span-9 min-h-screen ">
-                    <Card
-                      className="min-h-full"
-                      style={{ backgroundColor: "var(--background-color)" }}
-                    >
-                      {children}
-                    </Card>
-                  </main>
-                </div>
-              </Container>
+            <AuthProvider>
+              <Theme
+                appearance="light"
+                panelBackground="translucent"
+                accentColor="purple"
+              >
+                <Container className="mx-auto w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12">
+                  <Card
+                    mb="3"
+                    mt="3"
+                    className="p-2"
+                    variant="classic"
+                    style={{ backgroundColor: "var(--background-color)" }}
+                  >
+                    {/* <nav className=""> */}
+                    <Navbar />
+                    {/* </nav> */}
+                  </Card>
+                  <div className="grid grid-flow-row grid-cols-12 gap-2 ">
+                    <aside className="hidden lg:block text-sm lg:col-span-3  ">
+                      <AsideBar />
+                    </aside>
+                    <main className="col-span-12 text-sm lg:col-span-9 min-h-screen ">
+                      <Card
+                        className="min-h-full"
+                        style={{ backgroundColor: "var(--background-color)" }}
+                      >
+                        {children}
+                      </Card>
+                    </main>
+                  </div>
+                </Container>
 
-              {/* <ThemePanel /> */}
-            </Theme>
-          </AuthProvider>
+                {/* <ThemePanel /> */}
+              </Theme>
+            </AuthProvider>
           </TanStackProvider>
         </ThemeProvider>
       </body>

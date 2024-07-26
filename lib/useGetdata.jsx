@@ -11,7 +11,7 @@ const GetUserData = async () => {
     },
   });
   return user;
-  console.log(user);
+  // console.log(user);
 };
 
 export default GetUserData;

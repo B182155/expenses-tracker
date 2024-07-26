@@ -77,7 +77,7 @@ const CreateExpensePage = ({ params }) => {
       setFriends(members);
     } catch (error) {
       // return error;
-      console.error(error.message);
+      // console.error(error.message);
     }
   };
 
@@ -99,7 +99,7 @@ const CreateExpensePage = ({ params }) => {
       setUserData(userData);
       // console.log(userData);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -157,7 +157,7 @@ const CreateExpensePage = ({ params }) => {
 
       const { description, date, payerId, friends } = values;
 
-      console.log(friends);
+      // console.log(friends);
       const amount = parseInt(values.amount);
       const groupId = params.id;
 
@@ -171,7 +171,7 @@ const CreateExpensePage = ({ params }) => {
       // console.log(data);
     } catch (error) {
       setError(error.message);
-      console.log(error);
+      // console.log(error);
     } finally {
       setisSubmitting(false);
     }

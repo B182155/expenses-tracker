@@ -9,7 +9,12 @@ const GotoCreatePageButton = () => {
     router.push("/GroupPage");
   };
   return (
-    <Button size="3" mt="3" className="w-6/12" onClick={gotoCreatePage}>
+    <Button
+      size="3"
+      mt="3"
+      className="w-full md:w-6/12 text-lg sm:text-xl md:text-2xl"
+      onClick={gotoCreatePage}
+    >
       Add Group
     </Button>
   );
