@@ -51,7 +51,9 @@ const DeleteExpenseButton = ({ expenseId }) => {
               </Button>
             </Dialog.Close>
             <Dialog.Close>
-              <Button onClick={deleteIssue}>Delete</Button>
+              <Button color="red" onClick={deleteIssue}>
+                Delete
+              </Button>
             </Dialog.Close>
           </Flex>
         </Dialog.Content>
