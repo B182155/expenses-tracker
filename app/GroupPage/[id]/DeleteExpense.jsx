@@ -33,7 +33,7 @@ const DeleteExpenseButton = ({ expenseId }) => {
       <Dialog.Root>
         <Dialog.Trigger>
           <div disabled={isDeleting}>
-            <MdOutlineDeleteForever color="red" className="h-5 w-5" />
+            <MdOutlineDeleteForever className="h-5 w-5 text-purple-700 dark:text-indigo-400" />
             {isDeleting && <Spinner />}
           </div>
         </Dialog.Trigger>
@@ -50,10 +50,8 @@ const DeleteExpenseButton = ({ expenseId }) => {
                 Cancel
               </Button>
             </Dialog.Close>
-            <Dialog.Close>
-              <Button color="red" onClick={deleteIssue}>
-                Delete
-              </Button>
+            <Dialog.Close color="red">
+              <Button onClick={deleteIssue}>Delete</Button>
             </Dialog.Close>
           </Flex>
         </Dialog.Content>

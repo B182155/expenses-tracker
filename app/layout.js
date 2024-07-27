@@ -28,10 +28,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         // className={inter.className}
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased bg-gradient-to-r from-purple-50 via-purple-100 to-purple-50",
-          fontSans.variable
-        )}
+        className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
       >
         <ThemeProvider
           attribute="class"
@@ -46,26 +43,26 @@ export default function RootLayout({ children }) {
                 panelBackground="translucent"
                 accentColor="purple"
               >
-                <Container className="mx-auto w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12">
+                <Container className="mx-auto w-full lg:w-10/12 xl:w-9/12 2xl:w-8/12">
                   <Card
                     mb="3"
                     mt="3"
                     className="p-2"
                     variant="classic"
-                    style={{ backgroundColor: "var(--background-color)" }}
+                    // style={{ backgroundColor: "var(--background-color)" }}
                   >
                     {/* <nav className=""> */}
                     <Navbar />
                     {/* </nav> */}
                   </Card>
                   <div className="grid grid-flow-row grid-cols-12 gap-2 ">
-                    <aside className="hidden lg:block text-sm lg:col-span-3  ">
+                    <aside className="hidden md:block text-sm md:col-span-3  ">
                       <AsideBar />
                     </aside>
-                    <main className="col-span-12 text-sm lg:col-span-9 min-h-screen ">
+                    <main className="col-span-12 text-sm md:col-span-9 min-h-screen ">
                       <Card
                         className="min-h-full"
-                        style={{ backgroundColor: "var(--background-color)" }}
+                        // style={{ backgroundColor: "var(--background-color)" }}
                       >
                         {children}
                       </Card>

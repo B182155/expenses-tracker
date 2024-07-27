@@ -72,10 +72,10 @@ const GroupDetailsPage = async ({ params: { id } }) => {
 
     return (
       <div className="flex flex-col rounded-md p-2 w-2/12">
-        <h1 className="text-sm  sm:text-base md:text-lg  text-gray-500">
+        <h1 className="text-sm  sm:text-base md:text-lg  text-gray-500 dark:text-gray-100">
           {monthString.substring(0, 3)}
         </h1>
-        <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-gray-700 font-mono -mt-1">
+        <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-gray-700 dark:text-gray-200 font-mono -mt-1">
           {Date}
         </h2>
       </div>
@@ -114,10 +114,10 @@ const GroupDetailsPage = async ({ params: { id } }) => {
       </Card>
       <Link
         href={`/GroupPage/${id}/CreateExpensePage`}
-        className="inline-block w-full mb-3 rounded-md"
+        className="inline-block w-full sm:w-1/2 mb-3 rounded-md"
       >
         {user.id === GroupData.createdBy && (
-          <Button className="w-full sm:w-1/2 text-gray-200 font-serif font-medium text-base">
+          <Button className="w-full text-gray-200 font-serif font-medium text-base">
             Add Expense
           </Button>
         )}
@@ -132,19 +132,19 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                     // className="flex flex-row gap-7 items-center border-b-2 first:border-b-0 w-full"
                     value={expense.id}
                     key={expense.id}
-                    className="border-b-2 border-purple-200"
+                    className="border-b-2 border-purple-200 dark:border-gray-900"
                   >
-                    <AccordionTrigger className="hover:no-underline bg-purple-100 rounded-md shadow-md pr-4">
+                    <AccordionTrigger className="hover:no-underline bg-purple-50 dark:bg-gray-800  rounded-md shadow-md pr-4">
                       <div className="flex flex-row justify-between items-center w-full ">
                         <div className="flex gap-1 md:gap-3 items-center w-full">
                           <GetDate_Month date={expense.date} />
                           <div className="flex flex-col justify-start items-start">
-                            <div className=" text-gray-700">
+                            <div className="text-gray-700 dark:text-gray-200">
                               <h3 className="text-lg sm:text-xl md:text-2xl font-serif font-medium">
                                 {capitalizeFirstLetter(expense.description)}
                               </h3>
                             </div>
-                            <div className="text-gray-600 text-left">
+                            <div className="text-gray-600 dark:text-gray-400 text-left">
                               <span className="text-sm sm:text-base md:text-lg lg:text-xl font-sans font-medium">
                                 {expense?.PaidBy.name} paid{" "}
                                 <IndianRupee
@@ -171,9 +171,13 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                           {capitalizeFirstLetter(expense.description)}
                         </span>
                         {"  "}
-                        <span className="text-base sm:text-lg md:text-xl lg:text-2xl text-purple-600 dark:text-slate-300">
+                        <span className="text-sm sm:text-base md:text-lg lg:text-xl text-purple-600 dark:text-purple-400">
                           {" "}
-                          INR {expense.amount}{" "}
+                          <IndianRupee
+                            className="inline-block"
+                            size="20"
+                          />{" "}
+                          {expense.amount}{" "}
                         </span>
                       </h1>
                       <div className="flex gap-2 items-center w-8/12">
@@ -194,14 +198,14 @@ const GroupDetailsPage = async ({ params: { id } }) => {
 
                           {expense.splits.map((split) => (
                             <p
-                              className="ml-2 border-l-2 text-xs sm:text-sm md:text-base lg:text-lg border-purple-600 dark:border-slate-300"
+                              className="ml-2 border-l-2 text-xs sm:text-sm md:text-base lg:text-lg border-purple-600 dark:border-purple-400  "
                               key={split.id}
                             >
-                              <span className="text-purple-700 dark:text-slate-300">
+                              <span className="text-purple-700 dark:text-purple-400 ">
                                 {"--->"}
                               </span>
                               <span>
-                                <span className="font-medium font-serif">
+                                <span className="font-extralight font-sans">
                                   {names.get(split.friendId)}
                                 </span>
                                 {split.amountOwed < 0 ? (
