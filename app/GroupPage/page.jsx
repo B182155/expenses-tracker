@@ -47,7 +47,9 @@ import {
   FormLabel,
   FormMessage,
 } from "../../components/ui/form";
-import { Input } from "../../components/ui/input";
+// import { Input } from "../../components/ui/input";
+
+import { Input } from "@/components/ui/input";
 // import FriendComponent from "./FriendComponent";
 import Spinner from "@/app/components/Spinner";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
@@ -176,10 +178,10 @@ const CreateGroup = () => {
           <Callout.Text>{`Something went wrong`}</Callout.Text>
         </Callout.Root>
       )}
-      {/* <h1>{Session?.user.name}</h1> */}
+
       <CardHeader>
-        <CardTitle className="text-gray-600 font-serif dark:text-slate-300 ">
-          Create A New Group
+        <CardTitle className="text-lg  md:text-xl  text-gray-600  font-serif dark:text-slate-300 ">
+          NEW GROUP
         </CardTitle>
         {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
       </CardHeader>
@@ -191,11 +193,15 @@ const CreateGroup = () => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-600 font-serif font-semibold text-base  dark:text-slate-300">
+                  <FormLabel className="text-base md:text-lg lg:text-xl text-gray-600 dark:text-slate-300  font-serif font-medium   ">
                     Group Title
                   </FormLabel>
-                  <FormControl>
-                    <Input placeholder="Title of the group..." {...field} />
+                  <FormControl className=" w-full md:w-6/12 lg:w-7/12">
+                    <Input
+                      className="text-gray-700"
+                      placeholder="Title of the group..."
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -220,34 +226,38 @@ const CreateGroup = () => {
               name="friend"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel className="text-gray-600 font-serif font-semibold text-base  dark:text-slate-300 ">
+                  <FormLabel className="text-base md:text-lg lg:text-xl text-gray-600 font-serif font-medium dark:text-slate-300 ">
                     Add Friends
                   </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          variant="outline"
+                          // variant="outline"
+                          variant="soft"
+                          // size={{ InputBoxSize }}
+                          size="3"
                           role="combobox"
                           className={cn(
-                            "w-full lg:w-7/12",
-                            !field.value && "text-muted-foreground "
+                            "w-full md:w-6/12 lg:w-7/12",
+                            !field.value && "text-muted-foreground"
                           )}
                         >
                           <div className="w-full flex justify-between ">
-                            <p className="text-gray-600 font-serif font-medium text-md  dark:text-slate-300">
+                            <h2 className="text-gray-600 font-serif font-light text-md dark:text-slate-300">
                               {field.value
                                 ? users.find(
                                     (user) => user.email === field.value
                                   )?.name
                                 : "Select Users..."}
-                            </p>
+                            </h2>
+                            {/* <p>Select Users</p> */}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </div>
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-full p-0 h-52">
+                    <PopoverContent className="w-full p-0 h-60">
                       <Command>
                         <CommandInput placeholder="Search email..." />
                         <CommandEmpty>No user found.</CommandEmpty>
@@ -257,7 +267,7 @@ const CreateGroup = () => {
                             else
                               return (
                                 <CommandItem
-                                  className="text-sm dark:text-slate-400"
+                                  className="text-sm"
                                   value={user.email}
                                   key={user.id}
                                   onSelect={() => {
@@ -274,7 +284,7 @@ const CreateGroup = () => {
                                 >
                                   <Check
                                     className={cn(
-                                      "mr-2 h-4 w-4",
+                                      "mr-2 h-4 w-4 ",
                                       user.email === field.value
                                         ? "opacity-100"
                                         : "opacity-0"
@@ -297,20 +307,20 @@ const CreateGroup = () => {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-600 font-serif font-semibold text-base  dark:text-slate-300">
+                  <FormLabel className="text-base md:text-lg lg:text-xl text-gray-600 font-serif font-medium   dark:text-slate-300">
                     Group Type
                   </FormLabel>
                   <FormControl>
-                    <div className="w-full lg:w-7/12">
+                    <div className="w-full md:w-6/12 lg:w-7/12">
                       <Select {...field} onValueChange={field.onChange}>
-                        <SelectTrigger id="type">
+                        <SelectTrigger id="type" className="text-gray-600">
                           <SelectValue placeholder="Type" />
                         </SelectTrigger>
                         <SelectContent position="popper">
                           {types.map((type) => {
                             return (
                               <SelectItem value={type.value} key={type.value}>
-                                <h2 className="text-gray-600 font-serif font-medium text-base dark:text-slate-300">
+                                <h2 className="text-base md:text-lg lg:text-xl text-gray-600 font-serif font-light">
                                   {type.label}
                                 </h2>
                               </SelectItem>
@@ -326,7 +336,7 @@ const CreateGroup = () => {
             <Button
               disabled={isSubmitting}
               onClick={form.handleSubmit(onSubmit)}
-              className="w-7/12"
+              className="w-full md:w-6/12 lg:w-7/12"
             >
               {isSubmitting ? `Saving...  ` : "Save"}
 

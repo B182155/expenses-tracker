@@ -33,8 +33,11 @@ const DeleteExpenseButton = ({ expenseId }) => {
       <Dialog.Root>
         <Dialog.Trigger>
           <div disabled={isDeleting}>
-            <MdOutlineDeleteForever className="h-5 w-5 text-purple-700 dark:text-indigo-400" />
-            {isDeleting && <Spinner />}
+            {isDeleting ? (
+              <Spinner />
+            ) : (
+              <MdOutlineDeleteForever className="h-5 w-5 text-purple-700 dark:text-indigo-400" />
+            )}
           </div>
         </Dialog.Trigger>
 

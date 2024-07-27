@@ -12,7 +12,7 @@ const GotoCreatePageButton = () => {
     <Button
       size="3"
       mt="3"
-      className="w-full md:w-6/12 text-lg sm:text-xl md:text-2xl"
+      className="w-full md:w-6/12 text-base md:text-lg lg:text-xl"
       onClick={gotoCreatePage}
     >
       Add Group

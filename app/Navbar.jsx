@@ -16,6 +16,8 @@ import * as Avatar from "@radix-ui/react-avatar";
 import Skeleton from "./components/Skeleton";
 import { useSession } from "next-auth/react";
 import { ModeToggle } from "./components/ModeToggle";
+// import { MdGroupAdd } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
 
 const NavLinks = () => {
   const currentpath = usePathname();
@@ -57,6 +59,9 @@ const Navbar = () => {
         <Flex align="center" gap="4">
           <Link href="/">
             <FcMoneyTransfer className="h-10 w-10" />
+          </Link>
+          <Link href="/" className="md:hidden">
+            <FaHome className="h-8 w-8" />
           </Link>
         </Flex>
         <Flex align="center" gap="4">

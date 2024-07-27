@@ -209,7 +209,7 @@ const CreateExpensePage = ({ params }) => {
   return (
     <Card className="w-full lg:w-9/12 mx-auto" my="2">
       <CardHeader>
-        <CardTitle className="text-gray-600 font-serif font-semibold text-xl dark:text-white">
+        <CardTitle className="text-gray-600 text-lg  md:text-xl font-serif font-semibold dark:text-gray-200">
           Add an Expense
         </CardTitle>
         {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
@@ -222,10 +222,10 @@ const CreateExpensePage = ({ params }) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-600 font-serif font-semibold text-base dark:text-white">
+                  <FormLabel className="text-gray-700 text-sm sm:text-base md:text-lg font-serif font-medium  dark:text-gray-200">
                     Description
                   </FormLabel>
-                  <FormControl>
+                  <FormControl className="text-gray-700">
                     <Textarea
                       placeholder="Enter description ..."
                       className="resize-none"
@@ -245,15 +245,11 @@ const CreateExpensePage = ({ params }) => {
                   name="amount"
                   render={({ field }) => (
                     <FormItem>
-                      {/* <FormLabel>Description</FormLabel> */}
                       <FormControl>
-                        {/* <Input type="number">
-                      
-                    </Input> */}
                         <Flex align="center" gap="2" className="" pl="2">
                           <IndianRupee />
                           <Input
-                            // className="lg:w-5/12"
+                            className="text-gray-700"
                             type="number"
                             placeholder="0.00"
                             {...field}
@@ -278,10 +274,10 @@ const CreateExpensePage = ({ params }) => {
                         onValueChange={field.onChange}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="text-gray-700">
                             <SelectValue
-                              placeholder="Paid By"
-                              className="text-gray-600 font-serif font-medium text-base"
+                              placeholder="Select Payee"
+                              className="font-serif font-medium text-base"
                             />
                           </SelectTrigger>
                         </FormControl>
@@ -317,20 +313,21 @@ const CreateExpensePage = ({ params }) => {
                         >
                           <FormControl>
                             <Button
-                              variant={"outline"}
+                              variant="soft"
+                              size="3"
                               className={cn(
-                                " pl-3 text-left font-normal",
+                                "pl-3 text-left text-sm sm:text-base md:text-lg  font-normal",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                // : format(Date.now(), 'PPP')
-                                <span className="font-serif font-medium text-base dark:text-slate-300">
-                                  Pick date
-                                </span>
-                              )}
+                              {
+                                field.value
+                                  ? format(field.value, "PPP")
+                                  : format(Date.now(), "PPP")
+                                //<span className="font-serif font-medium text-base dark:text-slate-300">
+                                //  Pick date
+                                //</span>
+                              }
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
                           </FormControl>
@@ -360,7 +357,7 @@ const CreateExpensePage = ({ params }) => {
                   render={() => (
                     <FormItem>
                       <div className="mb-4">
-                        <FormLabel className="text-gray-600 font-serif font-semibold text-base dark:text-white">
+                        <FormLabel className="text-sm sm:text-base md:text-lg text-gray-600 font-serif font-medium  dark:text-gray-200">
                           Select Members
                         </FormLabel>
                       </div>
@@ -392,7 +389,7 @@ const CreateExpensePage = ({ params }) => {
                                     }}
                                   />
                                 </FormControl>
-                                <FormLabel className="font-normal">
+                                <FormLabel className="text-sm  lg:text-base font-normal">
                                   {friend.name}
                                 </FormLabel>
                               </FormItem>
@@ -409,7 +406,7 @@ const CreateExpensePage = ({ params }) => {
             <Button
               disabled={isSubmitting}
               onClick={form.handleSubmit(onSubmit)}
-              className="w-6/12"
+              className="w-full md:w-6/12"
             >
               {isSubmitting ? (
                 <h2 className="text-gray-200 font-serif font-medium text-base">

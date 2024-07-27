@@ -37,7 +37,7 @@ const GroupCard = ({ group }) => {
             <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-serif font-semibold text-gray-500 dark:text-white">
               {capitalizeFirstLetter(group.title)}
             </h3>
-            <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-serif font-semibold text-purple-400">
+            <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-serif font-medium text-purple-400">
               {group.createdAt.toDateString()}
             </h2>
           </Box>
