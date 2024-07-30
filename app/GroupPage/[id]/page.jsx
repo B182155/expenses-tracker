@@ -13,13 +13,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import DeleteExpenseButton from "./DeleteExpense";
-
 import { capitalizeFirstLetter } from "@/app/components/CapitalizeFirstLetter";
 
 import { Home, CarTaxiFront as Tour, Album as Other } from "lucide-react";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
+import TriggerAccordion from "./TriggerAccordion";
+import ContentAccordion from "./ContentAccordion";
 
 // import { getServerSession } from "next-auth";
 // import authOptions from "@/app/auth/authOptions";
@@ -59,36 +59,6 @@ const GroupDetailsPage = async ({ params: { id } }) => {
   const { members } = GroupData;
 
   const names = new Map(members.map((member) => [member.id, member.name]));
-
-  // console.log(expenses);
-
-  // const date = new Date();
-
-  const GetDate_Month = ({ date }) => {
-    const Date = date.getDate();
-    const monthString = date.toLocaleString("default", {
-      month: "long",
-    });
-
-    return (
-      <div className="flex flex-col rounded-md p-2 w-2/12">
-        <h1 className="text-sm  sm:text-base md:text-lg  text-gray-500 dark:text-gray-100">
-          {monthString.substring(0, 3)}
-        </h1>
-        <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-gray-700 dark:text-gray-200 font-mono -mt-1">
-          {Date}
-        </h2>
-      </div>
-    );
-  };
-
-  // function capitalizeFirstLetter(string) {
-  //   return string.charAt(0).toUpperCase() + string.slice(1);
-  // }
-
-  // function capitalizeFirstLetter(string) {
-  //   return string.charAt(0).toUpperCase() + string.slice(1);
-  // }
 
   return (
     <>
@@ -135,106 +105,16 @@ const GroupDetailsPage = async ({ params: { id } }) => {
                     className="border-b-2 border-purple-200 dark:border-gray-900"
                   >
                     <AccordionTrigger className="hover:no-underline bg-purple-50 dark:bg-gray-800  rounded-md shadow-md pr-4">
-                      <div className="flex flex-row justify-between items-center w-full ">
-                        <div className="flex gap-1 md:gap-3 items-center w-full">
-                          <GetDate_Month date={expense.date} />
-                          <div className="flex flex-col justify-start items-start">
-                            <div className="text-gray-700 dark:text-gray-200">
-                              <h3 className="text-lg sm:text-xl md:text-2xl font-serif font-medium">
-                                {capitalizeFirstLetter(expense.description)}
-                              </h3>
-                            </div>
-                            <div className="text-gray-600 dark:text-gray-400 text-left">
-                              <span className="text-sm sm:text-base md:text-lg lg:text-xl font-sans font-medium">
-                                {expense?.PaidBy.name} paid{" "}
-                                <IndianRupee
-                                  className="inline-block"
-                                  size="18"
-                                />
-                                <span className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold">
-                                  {expense.amount}
-                                </span>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        {user.id === GroupData.createdBy && (
-                          <div className="md:mr-3">
-                            <DeleteExpenseButton expenseId={expense.id} />
-                          </div>
-                        )}
-                      </div>
+                      <TriggerAccordion
+                        expense={expense}
+                        groupCreated={user.id === GroupData.createdBy}
+                      />
                     </AccordionTrigger>
                     <AccordionContent className="mx-5 my-5">
-                      <h1 className="text-gray-700 font-serif font-semibold text-base sm:text-lg md:text-xl lg:text-2xl dark:text-slate-300">
-                        <span>
-                          {capitalizeFirstLetter(expense.description)}
-                        </span>
-                        {"  "}
-                        <span className="text-sm sm:text-base md:text-lg lg:text-xl text-purple-600 dark:text-purple-400">
-                          {" "}
-                          <IndianRupee
-                            className="inline-block"
-                            size="20"
-                          />{" "}
-                          {expense.amount}{" "}
-                        </span>
-                      </h1>
-                      <div className="flex gap-2 items-center w-8/12">
-                        <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-serif font-semibold text-gray-600 dark:text-slate-300">
-                          {expense.date.toDateString()}
-                        </h2>
-                      </div>
-                      <div className="mt-1">
-                        <div className="flex flex-col">
-                          <span>
-                            <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold font-serif">
-                              {expense?.PaidBy.name}
-                            </span>{" "}
-                            paid{" "}
-                            <IndianRupee className="inline-block" size="20" />
-                            {expense.amount}
-                          </span>
-
-                          {expense.splits.map((split) => (
-                            <p
-                              className="ml-2 border-l-2 text-xs sm:text-sm md:text-base lg:text-lg border-purple-600 dark:border-purple-400  "
-                              key={split.id}
-                            >
-                              <span className="text-purple-700 dark:text-purple-400 ">
-                                {"--->"}
-                              </span>
-                              <span>
-                                <span className="font-extralight font-sans">
-                                  {names.get(split.friendId)}
-                                </span>
-                                {split.amountOwed < 0 ? (
-                                  <span>
-                                    {" "}
-                                    Lent{" "}
-                                    <IndianRupee
-                                      className="inline-block"
-                                      size="18"
-                                    />{" "}
-                                    {Math.abs(split.amountOwed)}{" "}
-                                  </span>
-                                ) : (
-                                  <span>
-                                    {" "}
-                                    Owe{" "}
-                                    <IndianRupee
-                                      className="inline-block"
-                                      size="18"
-                                    />{" "}
-                                    {split.amountOwed}{" "}
-                                  </span>
-                                )}
-                              </span>
-                            </p>
-                          ))}
-                          {/* <p>{`Rs - ${expense.amouX`nt}/-`}</p> */}
-                        </div>
-                      </div>
+                      <ContentAccordion
+                        expense={expense}
+                        SplittedArrayMap={names}
+                      />
                     </AccordionContent>
                   </AccordionItem>
                 );
